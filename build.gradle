@@ -1,0 +1,72 @@
+plugins {
+    id 'idea'
+    id 'java'
+    id 'org.springframework.boot' version '2.1.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+}
+
+group = 'com.andband'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+ext {
+    angularDir = "${projectDir}/src/ui"
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    dev
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    dev 'org.springframework.boot:spring-boot-devtools'
+}
+
+task npmInstall(type:Exec) {
+    group 'angular'
+    workingDir angularDir
+    commandLine 'cmd', '/c', 'npm install'
+}
+
+task ngBuild(type:Exec) {
+    group 'angular'
+    workingDir angularDir
+    if (env == 'prod' || env == 'pre-prod') {
+        commandLine 'cmd', '/c', 'npm run ng -- build --prod'
+    } else {
+        commandLine 'cmd', '/c', 'npm run ng -- build'
+    }
+}
+
+task ngWatch(type:Exec) {
+    group 'angular'
+    workingDir angularDir
+    commandLine 'cmd', '/c', 'npm run ng -- build --watch'
+}
+
+task ngTest(type:Exec) {
+    group 'angular'
+    workingDir angularDir
+    commandLine 'cmd', '/c', 'npm run ng -- test'
+}
+
+task ngList(type:Exec) {
+    group 'angular'
+    workingDir angularDir
+    commandLine 'cmd', '/c', 'npm run ng -- lint'
+}
+
+ngBuild.dependsOn npmInstall
+jar.dependsOn ngBuild
+bootRun.dependsOn ngBuild
+
+bootRun {
+    systemProperties = System.properties
+    classpath = sourceSets.main.runtimeClasspath + configurations.dev
+}
