@@ -3,13 +3,13 @@
   <div class="container">
     <h2 class="logo">AndBand</h2>
 
-    <div class="login">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="login">
       <div class="row">
         <div class="col-5">
-          <input type="email" class="form-control" placeholder="Email Address">
+          <input ngModel name="email" type="email" class="form-control" placeholder="Email Address">
         </div>
         <div class="col-5">
-          <input type="password" class="form-control" placeholder="Password">
+          <input ngModel name="password" type="password" class="form-control" placeholder="Password">
         </div>
         <button class="btn btn-primary">Login</button>
       </div>
@@ -18,7 +18,7 @@
           <a>Forgot password?</a>
         </div>
       </div>
-    </div>
+    </form>
 
     <div class="clearfix"></div>
 
@@ -31,17 +31,17 @@
     <div class="panel">
       <h3>Sign Up</h3>
     </div>
-    <form #form="ngForm" (ngSubmit)="resister(form.value)">
+    <form #registerForm="ngForm" (ngSubmit)="resister(registerForm.value)">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Name">
+        <input ngModel name="name" type="text" class="form-control" placeholder="Name">
       </div>
 
       <div class="form-group">
-        <input type="email" class="form-control" placeholder="Email Address">
+        <input ngModel name="email" type="email" class="form-control" placeholder="Email Address">
       </div>
 
       <div class="form-group">
-        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+        <input ngModel name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
       </div>
 
       <button type="submit">Register</button>

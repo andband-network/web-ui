@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from "./service/registration.service";
+import { AuthService } from "../common/service/auth/auth.service";
 
 @Component({
   selector: 'home',
@@ -8,30 +9,18 @@ import { RegistrationService } from "./service/registration.service";
 })
 export class HomeComponent implements OnInit {
 
-  constructor( private registrationService: RegistrationService) { }
+  constructor(private auth: AuthService, private registrationService: RegistrationService) {
+  }
 
   ngOnInit() {
   }
 
+  login(credentials) {
+    this.auth.login(credentials);
+  }
+
   resister(userDetails) {
-
-    console.log(userDetails);
-
-    // this.registrationService.register(userDetails)
-    //   .subscribe(success => {
-    //     if (success) {
-    //       console.log('success');
-    //       console.log("this.router.navigate(['/']);");
-    //       // this.router.navigate(['/']);
-    //     }
-    //     else {
-    //       console.log('failed');
-    //       // this.loginFailed = true;
-    //     }
-    //   }, error => {
-    //     console.log('error');
-    //     console.log(error);
-    //   });
+    this.registrationService.register(userDetails);
   }
 
 }
