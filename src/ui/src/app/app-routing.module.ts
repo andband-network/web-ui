@@ -22,7 +22,7 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
-    path: '**',//not found
+    path: '**',
     component: HomeComponent
   }
 ];

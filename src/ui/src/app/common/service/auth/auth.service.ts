@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "../http/http.service";
 import { HttpHeaders, HttpParams } from "@angular/common/http";
+import { map } from "rxjs/operators";
+import { TokenStore } from "./token-store.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +13,24 @@ export class AuthService {
   }
 
   login(credentials) {
-    const uri: string = AuthService.getLoginUri(credentials);
+    const uri: string = '/auth/oauth/token';
+    const requestBody = null;
     const httpOptions = {
-      headers: AuthService.getAuthHeaders(),
+      headers: AuthService.getLoginHeaders(),
       params: AuthService.getAuthParams(credentials)
     };
 
-    this.http.post(uri, null, httpOptions)
-      .subscribe(response => {
-        console.log('success');
-        console.log(response);
-      }, error => {
-        console.log('error');
-        console.log(error);
-      });
+    return this.http.post(uri, requestBody, httpOptions)
+      .pipe(map(response => {
+        if (response) {
+          // @ts-ignore
+          TokenStore.setAccessToken(response.access_token);
+        }
+        return response != null;
+      }));
   }
 
-  private static getLoginUri(credentials): string {
-    return '/auth/oauth/token?grant_type=password&username=' + credentials.email + '&password=' + credentials.password;
-  }
-
-  private static getAuthHeaders(): HttpHeaders {
+  private static getLoginHeaders(): HttpHeaders {
     return new HttpHeaders({
       Authorization: 'Basic ' + btoa('web:web-secret')
     })
