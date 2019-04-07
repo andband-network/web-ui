@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UiController {
 
-    @GetMapping("/*")
+    @GetMapping({"/*", "/**/{static:[^\\\\.]*}"})
     public String index(Model model, @Value("${andband.api-gateway.endpoint}") String apiUri) {
         model.addAttribute("apiUri", apiUri);
         return "index";
