@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpService } from "../http/http.service";
 import { HttpHeaders, HttpParams } from "@angular/common/http";
 import { map } from "rxjs/operators";
-import { TokenStore } from "./token-store.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class AuthService {
   }
 
   login(credentials) {
-    const uri: string = '/auth/oauth/token';
+    const uri: string = AuthService.getAuthUri();
     const requestBody = null;
     const httpOptions = {
       headers: AuthService.getLoginHeaders(),
@@ -24,10 +23,22 @@ export class AuthService {
       .pipe(map(response => {
         if (response) {
           // @ts-ignore
-          TokenStore.setAccessToken(response.access_token);
+          AuthService.setAccessToken(response.access_token);
         }
         return response != null;
       }));
+  }
+
+  static getAuthUri(): string {
+    return '/auth/oauth/token';
+  }
+
+  static getAccessToken(): string {
+    return localStorage.getItem('access_token');
+  }
+
+  private static setAccessToken(accessToken: string) {
+    localStorage.setItem('access_token', accessToken);
   }
 
   private static getLoginHeaders(): HttpHeaders {
