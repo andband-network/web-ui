@@ -56,10 +56,16 @@ task ngTest(type:Exec) {
     commandLine 'cmd', '/c', 'npm run ng -- test'
 }
 
-task ngList(type:Exec) {
+task ngLint(type:Exec) {
     group 'angular'
     workingDir angularDir
     commandLine 'cmd', '/c', 'npm run ng -- lint'
+}
+
+task ngE2e(type:Exec) {
+    group 'angular'
+    workingDir angularDir
+    commandLine 'cmd', '/c', 'npm run ng -- e2e'
 }
 
 ngBuild.dependsOn npmInstall
