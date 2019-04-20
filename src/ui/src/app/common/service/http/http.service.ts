@@ -9,28 +9,33 @@ export class HttpService {
   constructor(private http: HttpClient) {
   }
 
-  get(uri: string) {
-    const apiUri: string = HttpService.getApiUrl();
-    const requestUri: string = apiUri + uri;
-
+  get(path: string) {
+    const requestUri: string = HttpService.getRequestUri(path);
     return this.http.get(requestUri);
   }
 
-  post(uri: string, requestBody: any | null, httpOptions?) {
-    const apiUri: string = HttpService.getApiUrl();
-    const requestUri: string = apiUri + uri;
-
+  post(path: string, requestBody: any | null, httpOptions?) {
+    const requestUri: string = HttpService.getRequestUri(path);
     return this.http.post(requestUri, requestBody, httpOptions);
   }
 
-  static getApiUrl(): string {
+  put(path: string, requestBody: any | null, httpOptions?) {
+    const requestUri: string = HttpService.getRequestUri(path);
+    return this.http.put(requestUri, requestBody, httpOptions);
+  }
+
+  static getRequestUri(resourcePath: string):string {
+    return HttpService.getApiUri() + resourcePath;
+  }
+
+  static getApiUri(): string {
     // @ts-ignore
     return document.querySelector("meta[name='apiUri']").content;
   }
 
   static getApiDomain(): string {
     const protocolRegex: RegExp = /(http|https):\/\//;
-    return this.getApiUrl().replace(protocolRegex, '')
+    return this.getApiUri().replace(protocolRegex, '')
   }
 
 }

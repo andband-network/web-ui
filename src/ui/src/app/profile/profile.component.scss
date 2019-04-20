@@ -1,22 +1,3 @@
-.banner {
-  background-color: #b2b2b2;
-}
-.banner .logo {
-  margin: 15px;
-  float: left;
-  color: #ffffff;
-}
-.banner .login {
-  margin: 15px 5px 5px 5px;
-  float: right;
-}
-.banner a {
-  color: white;
-}
-body {
-  background-color: #dedede;
-}
-
 .btn.btn-primary {
   background-color: #5a6268!important;
   border-color: black!important;
@@ -25,14 +6,11 @@ body {
 .main-div {
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
-  margin: 50px auto 30px;
-  max-width: 60%;
+  margin: 0 auto 30px;
+  max-width: 90%;
   padding: 50px 70px 40px 71px;
 }
 
-.email-sent {
-  text-align: center;
-}
 
 .profile-details .main-div {
   background: #ffffff none repeat scroll 0 0;
@@ -43,25 +21,6 @@ body {
 }
 .profile-details textarea {
   width: 100%;
-}
-
-.banner .search {
-  margin: 15px 5px 5px 5px;
-  float: right;
-}
-
-.banner .settings {
-  margin-top: 50px;
-  float: right;
-}
-
-
-.main-div {
-  background: #ffffff none repeat scroll 0 0;
-  border-radius: 2px;
-  margin: 0 auto 30px;
-  max-width: 90%;
-  padding: 50px 70px 40px 71px;
 }
 
 .profile-pic img {
@@ -95,25 +54,12 @@ body {
   margin-right: 5px;
 }
 
-.search-results .profile-img img {
-  height: 70px;
-  width: 70px;
-}
-
-.results-amount {
-  margin-bottom: 10px;
-}
-
 .search .main-div {
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
   margin: 0 auto 30px;
   max-width: 90%;
   padding: 10px 70px 40px 71px;
-}
-
-.profile-action {
-  padding-left: 50%;
 }
 
 .connection a {

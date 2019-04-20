@@ -1,5 +1,27 @@
 <div class="container">
 
+  <div *ngIf="isLoggedIn()" class="banner">
+
+    <div class="container">
+      <h2 class="logo">AndBand</h2>
+
+      <div class="search">
+        <div class="row">
+          <div class="col-8">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <a href="search-results.html" class="btn btn-primary">Search</a>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+    </div>
+
+    <button (click)="signOut()">Sign Out</button>
+
+  </div>
+
   <router-outlet></router-outlet>
 
 </div>

@@ -28,7 +28,7 @@ import { AuthService } from "./common/service/auth/auth.service";
       config: {
         tokenGetter: AuthService.getAccessToken,
         whitelistedDomains: [HttpService.getApiDomain()],
-        blacklistedRoutes: [HttpService.getApiUrl() + AuthService.getAuthUri()]
+        blacklistedRoutes: [HttpService.getApiUri() + AuthService.getAuthPath()]
       }
     })
   ],

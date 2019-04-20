@@ -14,11 +14,11 @@ const routes: Routes = [
     component: AccountComponent
   },
   {
-    path: 'profile/:profileId',
+    path: 'profile',
     component: ProfileComponent
   },
   {
-    path: 'profile',
+    path: 'profile/:profileId',
     component: ProfileComponent
   },
   {

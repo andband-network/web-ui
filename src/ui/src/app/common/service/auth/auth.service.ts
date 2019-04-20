@@ -2,24 +2,25 @@ import { Injectable } from '@angular/core';
 import { HttpService } from "../http/http.service";
 import { HttpHeaders, HttpParams } from "@angular/common/http";
 import { map } from "rxjs/operators";
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpService) {
+  constructor(private http: HttpService, private jwtHelper: JwtHelperService) {
   }
 
   login(credentials) {
-    const uri: string = AuthService.getAuthUri();
+    const path: string = AuthService.getAuthPath();
     const requestBody = null;
     const httpOptions = {
       headers: AuthService.getLoginHeaders(),
       params: AuthService.getAuthParams(credentials)
     };
 
-    return this.http.post(uri, requestBody, httpOptions)
+    return this.http.post(path, requestBody, httpOptions)
       .pipe(map(response => {
         if (response) {
           // @ts-ignore
@@ -29,7 +30,23 @@ export class AuthService {
       }));
   }
 
-  static getAuthUri(): string {
+  isLoggedIn(): boolean {
+    let isLoggedIn: boolean = false;
+    const token: string = AuthService.getAccessToken();
+
+    if (token) {
+      const tokenExpired: boolean = this.jwtHelper.isTokenExpired(token);
+      isLoggedIn = !tokenExpired;
+    }
+
+    return isLoggedIn;
+  }
+
+  static signOut(): void {
+    localStorage.removeItem('access_token');
+  }
+
+  static getAuthPath(): string {
     return '/auth/oauth/token';
   }
 
@@ -37,7 +54,7 @@ export class AuthService {
     return localStorage.getItem('access_token');
   }
 
-  private static setAccessToken(accessToken: string) {
+  private static setAccessToken(accessToken: string): void {
     localStorage.setItem('access_token', accessToken);
   }
 

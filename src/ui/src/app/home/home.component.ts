@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RegistrationService } from "./service/registration.service";
 import { AuthService } from "../common/service/auth/auth.service";
 import { Router } from "@angular/router";
+import { HttpService } from "../common/service/http/http.service";
 
 @Component({
   selector: 'home',
@@ -10,24 +10,29 @@ import { Router } from "@angular/router";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router, private registrationService: RegistrationService, private authService: AuthService,) {
+  constructor(private router: Router, private http: HttpService, private authService: AuthService) {
   }
 
   ngOnInit() {
   }
 
-  login(credentials) {
+  login(credentials): void {
     this.authService.login(credentials)
       .subscribe(response => {
         this.router.navigate(['/profile']);
-      }, error => {
-        console.log('error');
-        console.log(error);
       });
   }
 
   resister(userDetails) {
-    this.registrationService.register(userDetails);
+    const path: string = '/register/signup';
+
+    return this.http.post(path, userDetails)
+      .subscribe(() => {
+        alert("user created");
+      }, error => {
+        console.log('error');
+        console.log(error);
+      });
   }
 
 }
