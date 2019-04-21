@@ -1,21 +1,25 @@
 <div class="main-content">
   <div class="container">
 
-    <div *ngIf="authService.isLoggedIn()" class="row col">
-      <button *ngIf="!editProfile" (click)="editProfile=!editProfile">Edit Profile</button>
-      <button *ngIf="editProfile" (click)="saveProfile()">Save Changes</button>
+    <div *ngIf="profileOwner" class="row col">
+      <button *ngIf="!editMode" (click)="enterEditMode()">Edit Profile</button>
+      <button *ngIf="editMode" (click)="saveProfile()">Save Changes</button>
+    </div>
+
+    <div *ngIf="userIsLoggedIn">
+      <button *ngIf="!profileOwner"></button>
     </div>
 
     <div class="main-div">
       <div class="row">
         <div class="profile-pic">
           <img [src]="profileImageLocation">
-          <input *ngIf="editProfile" type="file" name="profileImage" (change)="uploadImage($event)"/>
+          <input *ngIf="editMode" type="file" name="profileImage" (change)="uploadImage($event)"/>
         </div>
 
         <div class="profile-name">
-          <span *ngIf="!editProfile">{{profile?.name}}</span>
-          <input *ngIf="editProfile" [(ngModel)]="profile.name" type="text" name="name"/>
+          <span *ngIf="!editMode">{{profile?.name}}</span>
+          <input *ngIf="editMode" [(ngModel)]="profile.name" type="text" name="name"/>
         </div>
 
       </div>
@@ -24,8 +28,8 @@
           <strong>Bio: </strong>
         </div>
         <div class="row col">
-          <div *ngIf="!editProfile">{{profile?.bio}}</div>
-          <textarea *ngIf="editProfile" [(ngModel)]="profile.bio" name="bio"></textarea>
+          <div *ngIf="!editMode">{{profile?.bio}}</div>
+          <textarea *ngIf="editMode" [(ngModel)]="profile.bio" name="bio"></textarea>
         </div>
 
       </div>

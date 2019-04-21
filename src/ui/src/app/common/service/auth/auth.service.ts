@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from "../http/http.service";
-import { HttpHeaders, HttpParams } from "@angular/common/http";
-import { map } from "rxjs/operators";
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { map } from 'rxjs/operators';
+
+import { HttpService } from '../http/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -66,9 +67,9 @@ export class AuthService {
 
   private static getAuthParams(credentials): HttpParams {
     return new HttpParams()
-      .append("grant_type", "password")
-      .append("username", credentials.email)
-      .append("password", credentials.password);
+      .append('grant_type', 'password')
+      .append('username', credentials.email)
+      .append('password', credentials.password);
   }
 
 }

@@ -1,0 +1,42 @@
+<div class="main-content">
+  <div class="container search">
+    <div class="main-div">
+      <div class="results-amount row">
+        {{searchResults?.length}} results:
+      </div>
+      <div class="search-results">
+
+        <div *ngFor="let profile of searchResults">
+
+          <div class="search-result-profile row">
+
+          <div class="profile-img">
+            <a routerLink="/profile/{{profile.id}}">
+              <img src="{{imagesUri}}/{{profile.imageId}}">
+            </a>
+          </div>
+
+          <div class="details col-9">
+            <a routerLink="/profile/{{profile.id}}">
+              {{profile.name}}
+            </a>
+            <div>
+              <strong>Account Type: </strong> Musician
+            </div>
+          </div>
+
+          <div class="action">
+            <a routerLink="/profile/{{profile.id}}">
+              <button class="btn btn-primary">View Profile</button>
+            </a>
+          </div>
+
+          </div>
+
+          <hr>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

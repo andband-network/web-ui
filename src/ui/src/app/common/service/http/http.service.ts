@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
+
+import { DomainInfo } from '../../util/domain-info';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +11,9 @@ export class HttpService {
   constructor(private http: HttpClient) {
   }
 
-  get(path: string) {
+  get(path: string, httpOptions?) {
     const requestUri: string = HttpService.getRequestUri(path);
-    return this.http.get(requestUri);
+    return this.http.get(requestUri, httpOptions);
   }
 
   post(path: string, requestBody: any | null, httpOptions?) {
@@ -25,17 +27,7 @@ export class HttpService {
   }
 
   static getRequestUri(resourcePath: string):string {
-    return HttpService.getApiUri() + resourcePath;
-  }
-
-  static getApiUri(): string {
-    // @ts-ignore
-    return document.querySelector("meta[name='apiUri']").content;
-  }
-
-  static getApiDomain(): string {
-    const protocolRegex: RegExp = /(http|https):\/\//;
-    return this.getApiUri().replace(protocolRegex, '')
+    return DomainInfo.getApiUri() + resourcePath;
   }
 
 }

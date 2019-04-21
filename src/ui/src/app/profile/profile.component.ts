@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { HttpService } from "../common/service/http/http.service";
-import { AuthService } from "../common/service/auth/auth.service";
+import { ActivatedRoute } from '@angular/router';
+
+import { HttpService } from '../common/service/http/http.service';
+import { AuthService } from '../common/service/auth/auth.service';
+import { ObjectUtil } from '../common/util/object-util';
+import { DomainInfo } from '../common/util/domain-info';
 
 @Component({
   selector: 'profile',
@@ -12,20 +15,22 @@ export class ProfileComponent implements OnInit {
 
   private profile: Profile;
   private profileImageLocation: string;
-  private editProfile: boolean;
+  private userIsLoggedIn: boolean;
+  private profileOwner: boolean;
+  private editMode: boolean;
+  private originalProfile: Profile;
 
   constructor(private route: ActivatedRoute, private http: HttpService, public authService: AuthService) {
   }
 
   ngOnInit() {
-    this.editProfile = false;
     this.route.paramMap.subscribe(params => {
       const profileId: string = params.get('profileId');
-      this.loadProfile(profileId);
+      this.loadProfileInfo(profileId);
     });
   }
 
-  private loadProfile(profileId: string) {
+  private loadProfileInfo(profileId: string): void {
     let path: string = '/profiles';
     if (profileId) {
       path += '/' + profileId
@@ -34,13 +39,24 @@ export class ProfileComponent implements OnInit {
       .subscribe(response => {
         // @ts-ignore
         this.profile = response;
-        this.profileImageLocation = ProfileComponent.getProfileImageLocation(this.profile.imageId);
+        this.profileImageLocation = ProfileComponent.getImageLocation(this.profile.imageId);
       });
+
+    if (!profileId) {
+      this.profileOwner = true;
+    }
+  }
+
+  private enterEditMode(): void {
+    this.originalProfile = ObjectUtil.copy(this.profile);
+    this.editMode = true;
   }
 
   private saveProfile(): void {
-    this.http.put('/profiles', this.profile).subscribe();
-    this.editProfile = false;
+    if (!ObjectUtil.equals(this.profile, this.originalProfile)) {
+      this.http.put('/profiles', this.profile).subscribe();
+    }
+    this.editMode = false;
   }
 
   private uploadImage(event): void {
@@ -54,14 +70,13 @@ export class ProfileComponent implements OnInit {
 
       this.http.put(path, params)
         .subscribe(response => {
-          this.profileImageLocation = ProfileComponent.getProfileImageLocation(this.profile.imageId);
+          this.profileImageLocation = ProfileComponent.getImageLocation(this.profile.imageId);
         });
     }
   }
 
-  static getProfileImageLocation(imageId: string): string {
-    // @ts-ignore
-    const imagesUri = document.querySelector("meta[name='imagesUri']").content;
+  private static getImageLocation(imageId): string {
+    const imagesUri: string = DomainInfo.getImagesUri();
     return imagesUri + '/' + imageId + '?' + new Date().getTime();
   }
 
