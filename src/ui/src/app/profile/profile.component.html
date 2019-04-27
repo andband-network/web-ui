@@ -6,11 +6,15 @@
       <button *ngIf="editMode" (click)="saveProfile()">Save Changes</button>
     </div>
 
-    <div *ngIf="userIsLoggedIn">
-      <button *ngIf="!profileOwner"></button>
+    <div *ngIf="userIsLoggedIn && !isProfileOwner" class="connection-button">
+      <button *ngIf="connectionStatus === 'CONNECTED'" (click)="removeConnection()">Remove Connection</button>
+      <button *ngIf="connectionStatus === 'NOT_CONNECTED'" (click)="addConnection()">Add Connection</button>
+      <button *ngIf="connectionStatus === 'PENDING'" (click)="removeConnection()">Cancel Connection Request</button>
+      <button *ngIf="connectionStatus === 'NEEDS_CONFIRMATION'" (click)="addConnection()">Confirm Connection Request</button>
     </div>
 
     <div class="main-div">
+
       <div class="row">
         <div class="profile-pic">
           <img [src]="profileImageLocation">
@@ -23,6 +27,7 @@
         </div>
 
       </div>
+
       <div class="row bio">
         <div class="row col">
           <strong>Bio: </strong>
@@ -31,57 +36,21 @@
           <div *ngIf="!editMode">{{profile?.bio}}</div>
           <textarea *ngIf="editMode" [(ngModel)]="profile.bio" name="bio"></textarea>
         </div>
-
       </div>
 
 
       <div class="connections">
         <strong>Connections:</strong>
         <div class="row">
-          <div class="connection">
-            <a href="sample-profile-johnny.html">
-              <img src="https://i.stack.imgur.com/dWrvS.png"> <br>
-              Johnny Raz
-            </a>
-          </div>
-          <div class="connection">
-            <a href="sample-profile-johnny.html">
-              <img src="https://newmusicshelf.com/wp-content/uploads/blank-profile-picture.png"> <br>
-              Joe Bloggs
-            </a>
-          </div>
-          <div class="connection">
-            <a href="sample-profile-johnny.html">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC1128FO6ZNF-xkOShY1_q5sa7oz05qkj46filk0K55rtIPw29">
-              <br>
-              Mary Dooley
-            </a>
-
-          </div>
-          <div class="connection">
-            <a href="sample-profile-johnny.html">
-              <img src="http://profilepicturesdp.com/wp-content/uploads/2018/06/best-avatar-profile-pictures-4.png">
-              <br>
-              Jim Smith
-            </a>
-          </div>
-          <div class="connection">
-            <a href="sample-profile-johnny.html">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG9WGU-2xz1aprfxl2_4xTXwmKDSKhoTCra-cetPu9QzyJB6hy">
-              <br>
-              Sam Kelly
-            </a>
-          </div>
-          <div class="connection">
-            <a href="sample-profile-johnny.html">
-              <img src="https://newmusicshelf.com/wp-content/uploads/blank-profile-picture.png"> <br>
-              Kate Dover
-            </a>
+          <div *ngFor="let connection of connections">
+            <div class="connection">
+              <a routerLink="/profile/{{connection.id}}">
+                <img src="{{imagesUri}}/{{connection.imageId}}" [title]="connection.name" [alt]="connection.name"> <br>
+                {{connection.name}}
+              </a>
+            </div>
           </div>
         </div>
-
       </div>
 
     </div>

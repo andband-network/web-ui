@@ -33,7 +33,7 @@ import { SearchBoxComponent } from './search/search-box/search-box.component';
       config: {
         tokenGetter: AuthService.getAccessToken,
         whitelistedDomains: [DomainInfo.getApiDomain()],
-        blacklistedRoutes: [DomainInfo.getApiUri() + AuthService.getAuthPath()]
+        blacklistedRoutes: [DomainInfo.getApiUri() + AuthService.getOAuthTokenPath()]
       }
     })
   ],
