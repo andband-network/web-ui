@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MessagesComponent } from './messages/messages.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 
 
@@ -25,12 +26,16 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
+    path: 'messages',
+    component: MessagesComponent
+  },
+  {
     path: 'search-results',
     component: SearchResultsComponent
   },
   {
     path: '**',
-    component: HomeComponent// redirect component
+    component: HomeComponent// TODO - redirect component
   }
 ];
 

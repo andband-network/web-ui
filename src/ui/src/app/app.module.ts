@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatDialogModule, MatInputModule } from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +15,9 @@ import { AuthService } from './common/service/auth/auth.service';
 import { DomainInfo } from './common/util/domain-info';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { SearchBoxComponent } from './search/search-box/search-box.component';
+import { MessagesComponent } from './messages/messages.component';
+import { ComposeMessageDialogComponent } from './messages/compose-message/compose-message-dialog.component';
+
 
 
 @NgModule({
@@ -23,12 +28,21 @@ import { SearchBoxComponent } from './search/search-box/search-box.component';
     AccountComponent,
     SearchResultsComponent,
     SearchBoxComponent,
+    MessagesComponent,
+    ComposeMessageDialogComponent
+  ],
+  entryComponents: [
+    ComposeMessageDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatDialogModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: AuthService.getAccessToken,

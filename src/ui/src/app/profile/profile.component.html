@@ -13,6 +13,9 @@
       <button *ngIf="connectionStatus === 'NEEDS_CONFIRMATION'" (click)="addConnection()">Confirm Connection Request</button>
     </div>
 
+
+    <button *ngIf="userIsLoggedIn && !isProfileOwner" (click)="openSendMessageDialog()">Send Message</button>
+
     <div class="main-div">
 
       <div class="row">

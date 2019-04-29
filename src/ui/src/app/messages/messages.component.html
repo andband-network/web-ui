@@ -1,0 +1,40 @@
+<div class="wrapper">
+
+  <div class="side-bar">
+    <button (click)="viewInbox()">Inbox</button>
+    <button (click)="viewSent()">Sent</button>
+  </div>
+
+  <div class="messages" *ngIf="displayState !== 1">
+    <div class="message-row">
+      <div>{{displayState === 2 ? 'From' : 'To'}}</div>
+      <div>Subject</div>
+    </div>
+    <div *ngFor="let message of displayedMessages">
+      <div class="message-row" (click)="viewMessage(message)">
+        <div *ngIf="displayState === 2" class="name">{{message.senderProfileName}}</div>
+        <div *ngIf="displayState === 3" class="name">{{message.receiverProfileName}}</div>
+        <div class="subject">{{message.subject}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="message" *ngIf="displayState === 1">
+    <div *ngIf="displayState === 2">
+      from: {{displayedMessage.senderProfileName}}
+    </div>
+    <div *ngIf="displayState === 3">
+      from: {{displayedMessage.receiverProfileName}}
+    </div>
+    <div>
+      date: {{displayedMessage.createdDate}}
+    </div>
+    <div>
+      subject: {{displayedMessage.subject}}
+    </div>
+    <div>
+      message: {{displayedMessage.text}}
+    </div>
+  </div>
+
+</div>

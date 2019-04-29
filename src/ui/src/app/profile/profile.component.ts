@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 import { HttpService } from '../common/service/http/http.service';
 import { AuthService } from '../common/service/auth/auth.service';
 import { ObjectUtil } from '../common/util/object-util';
 import { DomainInfo } from '../common/util/domain-info';
 import { AppStorage } from '../common/util/app-storage';
+import { ComposeMessageDialogComponent } from '../messages/compose-message/compose-message-dialog.component';
 
 @Component({
   selector: 'profile',
@@ -24,7 +26,7 @@ export class ProfileComponent implements OnInit {
   private editMode: boolean;
   private originalProfile: Profile;
 
-  constructor(private route: ActivatedRoute, private http: HttpService, public authService: AuthService) {
+  constructor(private route: ActivatedRoute, private http: HttpService, private authService: AuthService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -58,7 +60,6 @@ export class ProfileComponent implements OnInit {
         this.loadConnectionStatus(profileId);
       }
     }
-
   }
 
   private loadConnections(profileId: string): void {
@@ -132,6 +133,16 @@ export class ProfileComponent implements OnInit {
 
   private updateProfileImage(imageId: string): void {
     this.profileImageLocation = this.imagesUri + '/' + imageId + '?' + new Date().getTime();
+  }
+
+  private openSendMessageDialog(): void {
+    const messageDialogConfig: any = {
+      data: {
+        senderProfileId: AppStorage.getProfileId(),
+        receiverProfileId: this.profile.id
+      }
+    };
+    this.dialog.open(ComposeMessageDialogComponent, messageDialogConfig);
   }
 
 }

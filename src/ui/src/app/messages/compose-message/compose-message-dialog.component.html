@@ -1,0 +1,11 @@
+<form class="example-form">
+  <!--<mat-form-field class="example-full-width">-->
+    subject<input type="text" [(ngModel)]="messageSubject" name="messageSubject">
+    text <textarea [(ngModel)]="messageText" name="textMessage"></textarea>
+  <!--</mat-form-field>-->
+
+
+  <button mat-raised-button (click)="sendMessage()">Send Message</button>
+  <button mat-raised-button (click)="cancel()">Cancel</button>
+
+</form>
