@@ -16,14 +16,14 @@ import { ComposeMessageDialogComponent } from '../messages/compose-message/compo
 })
 export class ProfileComponent implements OnInit {
 
-  private profile: Profile;
-  private profileImageLocation: string;
-  private connections: Array<Profile>;
-  private connectionStatus: string;
-  private imagesUri: string;
-  private userIsLoggedIn: boolean;
-  private isProfileOwner: boolean;
-  private editMode: boolean;
+  profile: Profile;
+  profileImageLocation: string;
+  connections: Array<Profile>;
+  connectionStatus: string;
+  imagesUri: string;
+  userIsLoggedIn: boolean;
+  isProfileOwner: boolean;
+  editMode: boolean;
   private originalProfile: Profile;
 
   constructor(private route: ActivatedRoute, private http: HttpService, private authService: AuthService, private dialog: MatDialog) {

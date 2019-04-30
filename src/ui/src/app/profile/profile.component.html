@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container">
 
-    <div *ngIf="profileOwner" class="row col">
+    <div *ngIf="isProfileOwner" class="row col">
       <button *ngIf="!editMode" (click)="enterEditMode()">Edit Profile</button>
       <button *ngIf="editMode" (click)="saveProfile()">Save Changes</button>
     </div>

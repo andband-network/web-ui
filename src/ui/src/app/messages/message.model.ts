@@ -6,5 +6,5 @@ interface Message {
   receiverProfileName?: string;
   name?: string;
   subject: string;
-  text: string
+  body: string
 }

@@ -16,13 +16,12 @@ enum DisplayState {
 })
 export class MessagesComponent implements OnInit {
 
-  private displayedMessages: Array<Message>;
-  private displayedMessage: Message;
+  displayedMessages: Array<Message>;
+  displayedMessage: Message;
   private receivedMessages: Array<Message>;
   private sentMessages: Array<Message>;
 
-  private displayState: DisplayState = DisplayState.INBOX;
-
+  displayState: DisplayState = DisplayState.INBOX;
 
   constructor(private http: HttpService) {
   }
@@ -47,17 +46,17 @@ export class MessagesComponent implements OnInit {
 
   }
 
-  private viewInbox() {
+  viewInbox() {
     this.displayedMessages = this.receivedMessages;
     this.displayState = DisplayState.INBOX;
   }
 
-  private viewSent() {
+  viewSent() {
     this.displayedMessages = this.sentMessages;
     this.displayState = DisplayState.SENT;
   }
 
-  private viewMessage(message: Message) {
+  viewMessage(message: Message) {
     this.displayedMessage = message;
     this.displayState = DisplayState.INDIVIDUAL_MESSAGE;
 

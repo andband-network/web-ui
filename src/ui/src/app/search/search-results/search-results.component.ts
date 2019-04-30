@@ -11,8 +11,8 @@ import { DomainInfo } from '../../common/util/domain-info';
 })
 export class SearchResultsComponent implements OnInit {
 
-  private searchResults: Array<Profile>;
-  private imagesUri: string;
+  searchResults: Array<Profile>;
+  imagesUri: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private searchService: SearchService) {
   }

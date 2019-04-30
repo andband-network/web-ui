@@ -14,7 +14,7 @@ export class SearchBoxComponent implements OnInit {
   ngOnInit() {
   }
 
-  private search(searchForm) {
+  search(searchForm) {
     const keyWords: Array<string> = searchForm.keyWords.split(' ');
     const navigationExtras: NavigationExtras = {
       queryParams: {

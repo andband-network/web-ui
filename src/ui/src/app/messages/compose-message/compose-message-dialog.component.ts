@@ -9,8 +9,8 @@ import { HttpService } from '../../common/service/http/http.service';
 })
 export class ComposeMessageDialogComponent implements OnInit {
 
-  private messageSubject: string;
-  private messageText: string;
+  messageSubject: string;
+  messageText: string;
 
   private message: Message;
 
@@ -23,23 +23,26 @@ export class ComposeMessageDialogComponent implements OnInit {
   }
 
 
-  private sendMessage() {
+  sendMessage() {
     const senderProfileId: string = this.messageConfig.senderProfileId;
     const receiverProfileId: string = this.messageConfig.receiverProfileId;
     const path: string = '/profiles/' + senderProfileId + '/messages/' + receiverProfileId;
 
     const message: Message = {
       subject: this.messageSubject,
-      text: this.messageText
+      body: this.messageText
     };
 
     this.http.post(path, message)
       .subscribe(() => {
         this.dialogRef.close()
+      }, () => {
+        alert("error sending message");
+        this.dialogRef.close()
       });
   }
 
-  private cancel() {
+  cancel() {
     this.dialogRef.close();
   }
 
