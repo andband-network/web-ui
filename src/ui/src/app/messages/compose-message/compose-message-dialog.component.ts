@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { HttpService } from '../../common/service/http/http.service';
 
 @Component({
-  selector: 'app-compose-message',
+  selector: 'compose-message',
   templateUrl: './compose-message-dialog.component.html',
   styleUrls: ['./compose-message-dialog.component.scss']
 })
@@ -14,8 +14,7 @@ export class ComposeMessageDialogComponent implements OnInit {
 
   private message: Message;
 
-  constructor(@Inject(MAT_DIALOG_DATA) private messageConfig: any, private dialogRef: MatDialogRef<ComposeMessageDialogComponent>, private http: HttpService) {
-    console.log('messages data', messageConfig);
+  constructor(@Inject(MAT_DIALOG_DATA) private messageData: any, private dialogRef: MatDialogRef<ComposeMessageDialogComponent>, private http: HttpService) {
     dialogRef.disableClose = true;
   }
 
@@ -24,8 +23,8 @@ export class ComposeMessageDialogComponent implements OnInit {
 
 
   sendMessage() {
-    const senderProfileId: string = this.messageConfig.senderProfileId;
-    const receiverProfileId: string = this.messageConfig.receiverProfileId;
+    const senderProfileId: string = this.messageData.senderProfileId;
+    const receiverProfileId: string = this.messageData.receiverProfileId;
     const path: string = '/profiles/' + senderProfileId + '/messages/' + receiverProfileId;
 
     const message: Message = {
@@ -45,6 +44,5 @@ export class ComposeMessageDialogComponent implements OnInit {
   cancel() {
     this.dialogRef.close();
   }
-
 
 }

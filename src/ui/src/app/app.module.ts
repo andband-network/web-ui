@@ -17,8 +17,8 @@ import { SearchResultsComponent } from './search/search-results/search-results.c
 import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ComposeMessageDialogComponent } from './messages/compose-message/compose-message-dialog.component';
-
-
+import { RegistrationComponent } from './registration/registration.component';
+import { ConfirmationModalDialogComponent } from './common/component/confirmation-model-dialog/confirmation-modal-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,10 +29,13 @@ import { ComposeMessageDialogComponent } from './messages/compose-message/compos
     SearchResultsComponent,
     SearchBoxComponent,
     MessagesComponent,
-    ComposeMessageDialogComponent
+    ComposeMessageDialogComponent,
+    RegistrationComponent,
+    ConfirmationModalDialogComponent
   ],
   entryComponents: [
-    ComposeMessageDialogComponent
+    ComposeMessageDialogComponent,
+    ConfirmationModalDialogComponent
   ],
   imports: [
     BrowserModule,

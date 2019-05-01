@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 import { HttpService } from '../common/service/http/http.service';
 import { AuthService } from '../common/service/auth/auth.service';
 import { AppStorage } from '../common/util/app-storage';
+import { ConfirmationModalDialogComponent } from '../common/component/confirmation-model-dialog/confirmation-modal-dialog.component';
 
 @Component({
   selector: 'home',
@@ -12,7 +14,7 @@ import { AppStorage } from '../common/util/app-storage';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router, private http: HttpService, private authService: AuthService) {
+  constructor(private router: Router, private dialog: MatDialog, private http: HttpService, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -32,10 +34,20 @@ export class HomeComponent implements OnInit {
 
   resister(userDetails) {
     const path: string = '/register/signup';
-    return this.http.post(path, userDetails)
+    this.http.post(path, userDetails)
       .subscribe(() => {
-        alert('user created');
+        this.showRegistrationEmailSentDialog();
       });
+  }
+
+  private showRegistrationEmailSentDialog() {
+    const dialogConfig: any = {
+      data: {
+        messageText: 'We have sent you an email to confirm your registration',
+        buttonText: 'OK'
+      }
+    };
+    this.dialog.open(ConfirmationModalDialogComponent, dialogConfig);
   }
 
 }

@@ -6,12 +6,16 @@ import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MessagesComponent } from './messages/messages.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
-
+import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'confirm-registration/:token',
+    component: RegistrationComponent
   },
   {
     path: 'account',

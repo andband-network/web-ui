@@ -10,7 +10,7 @@ enum DisplayState {
 }
 
 @Component({
-  selector: 'app-messages',
+  selector: 'messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss']
 })
@@ -59,7 +59,6 @@ export class MessagesComponent implements OnInit {
   viewMessage(message: Message) {
     this.displayedMessage = message;
     this.displayState = DisplayState.INDIVIDUAL_MESSAGE;
-
   }
 
 }
