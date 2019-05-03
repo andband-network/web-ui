@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
 
 import { HttpService } from '../common/service/http/http.service';
-import { ConfirmationModalDialogComponent } from '../common/component/confirmation-model-dialog/confirmation-modal-dialog.component';
+import { ProgressSpinnerService } from '../common/service/progress-spinner/progress-spinner.service';
+import { DialogService } from '../common/component/dialog/dialog.service';
 
 @Component({
   selector: 'registration',
@@ -12,26 +12,28 @@ import { ConfirmationModalDialogComponent } from '../common/component/confirmati
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router, private dialog: MatDialog, private http: HttpService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private spinner: ProgressSpinnerService,
+              private http: HttpService,
+              private dialogService: DialogService) {
   }
 
   ngOnInit() {
+    this.spinner.show();
     const token: string = this.route.snapshot.paramMap.get('token');
     const path: string = '/register/confirm/' + token;
     this.http.post(path)
       .subscribe(() => {
+        this.spinner.hide();
         this.showConfirmationDialog();
       });
   }
 
   private showConfirmationDialog() {
-    const dialogConfig: any = {
-      data: {
-        messageText: 'You are now registered with AndBand',
-        buttonText: 'Go to login page'
-      }
-    };
-    this.dialog.open(ConfirmationModalDialogComponent, dialogConfig)
+    const messageText: string = 'You are now registered with AndBand';
+    const buttonText: string = 'Go to login page';
+    this.dialogService.showModelDialog(messageText, buttonText)
       .afterClosed()
       .subscribe(() => {
         this.router.navigate(['']);

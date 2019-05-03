@@ -8,6 +8,8 @@ import { ObjectUtil } from '../common/util/object-util';
 import { DomainInfo } from '../common/util/domain-info';
 import { AppStorage } from '../common/util/app-storage';
 import { ComposeMessageDialogComponent } from '../messages/compose-message/compose-message-dialog.component';
+import { ProgressSpinnerService } from '../common/service/progress-spinner/progress-spinner.service';
+import { ConfirmationModalDialogComponent } from '../common/component/dialog/confirmation-model/confirmation-modal-dialog.component';
 
 @Component({
   selector: 'profile',
@@ -26,7 +28,11 @@ export class ProfileComponent implements OnInit {
   editMode: boolean;
   private originalProfile: Profile;
 
-  constructor(private route: ActivatedRoute, private http: HttpService, private authService: AuthService, private dialog: MatDialog) {
+  constructor(private route: ActivatedRoute,
+              private spinner: ProgressSpinnerService,
+              private http: HttpService,
+              private authService: AuthService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -83,11 +89,11 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  private addConnection(): void {
+  addConnection(): void {
     this.addRemoveConnectionAction('post');
   }
 
-  private removeConnection(): void {
+  removeConnection(): void {
     this.addRemoveConnectionAction('delete');
   }
 
@@ -103,39 +109,7 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  private enterEditMode(): void {
-    this.originalProfile = ObjectUtil.copy(this.profile);
-    this.editMode = true;
-  }
-
-  private saveProfile(): void {
-    if (!ObjectUtil.equals(this.profile, this.originalProfile)) {
-      this.http.put('/profiles', this.profile).subscribe();
-    }
-    this.editMode = false;
-  }
-
-  private uploadImage(event): void {
-    if (event.target.files.length > 0) {
-      const path: string = '/profiles/' + this.profile.id + '/image';
-
-      const params: FormData = new FormData();
-      const imageFile = event.target.files[0];
-      params.append('image', imageFile);
-      params.append('profileId', this.profile.id);
-
-      this.http.put(path, params)
-        .subscribe(() => {
-          this.updateProfileImage(this.profile.imageId);
-        });
-    }
-  }
-
-  private updateProfileImage(imageId: string): void {
-    this.profileImageLocation = this.imagesUri + '/' + imageId + '?' + new Date().getTime();
-  }
-
-  private openSendMessageDialog(): void {
+  openSendMessageDialog(): void {
     const messageDialogConfig: any = {
       data: {
         senderProfileId: AppStorage.getProfileId(),
@@ -143,6 +117,55 @@ export class ProfileComponent implements OnInit {
       }
     };
     this.dialog.open(ComposeMessageDialogComponent, messageDialogConfig);
+  }
+
+  enterEditMode(): void {
+    this.originalProfile = ObjectUtil.copy(this.profile);
+    this.editMode = true;
+  }
+
+  saveProfile(): void {
+    if (!ObjectUtil.equals(this.profile, this.originalProfile)) {
+      this.http.put('/profiles', this.profile).subscribe();
+    }
+    this.editMode = false;
+  }
+
+  uploadImage(event): void {
+    if (event.target.files.length > 0) {
+      const path: string = '/profiles/' + this.profile.id + '/image';
+      const params: FormData = new FormData();
+      const imageFile = event.target.files[0];
+
+      if (imageFile.size < 1000000) {
+        this.spinner.show();
+
+        params.append('image', imageFile);
+        params.append('profileId', this.profile.id);
+
+        this.http.put(path, params)
+          .subscribe(() => {
+            this.updateProfileImage(this.profile.imageId);
+            this.spinner.hide();
+          });
+      } else {
+        this.showImageSizeToLargeDialog();
+      }
+    }
+  }
+
+  private updateProfileImage(imageId: string): void {
+    this.profileImageLocation = this.imagesUri + '/' + imageId + '?' + new Date().getTime();
+  }
+
+  private showImageSizeToLargeDialog(): void {
+    const dialogConfig: any = {
+      data: {
+        messageText: 'Image files must be less than 1MB in size',
+        buttonText: 'OK'
+      }
+    };
+    this.dialog.open(ConfirmationModalDialogComponent, dialogConfig);
   }
 
 }

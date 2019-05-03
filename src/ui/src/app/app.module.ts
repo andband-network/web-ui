@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatDialogModule, MatInputModule } from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +19,8 @@ import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ComposeMessageDialogComponent } from './messages/compose-message/compose-message-dialog.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { ConfirmationModalDialogComponent } from './common/component/confirmation-model-dialog/confirmation-modal-dialog.component';
+import { ConfirmationModalDialogComponent } from './common/component/dialog/confirmation-model/confirmation-modal-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { ConfirmationModalDialogComponent } from './common/component/confirmatio
     MatButtonModule,
     MatInputModule,
     MatDialogModule,
+    NgxSpinnerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: AuthService.getAccessToken,

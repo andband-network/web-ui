@@ -1,26 +1,27 @@
-import { Component, Inject, InjectionToken, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+
 import { HttpService } from '../../common/service/http/http.service';
+import { ProgressSpinnerService } from '../../common/service/progress-spinner/progress-spinner.service';
 
 @Component({
   selector: 'compose-message',
   templateUrl: './compose-message-dialog.component.html',
   styleUrls: ['./compose-message-dialog.component.scss']
 })
-export class ComposeMessageDialogComponent implements OnInit {
+export class ComposeMessageDialogComponent {
 
   messageSubject: string;
   messageText: string;
 
   private message: Message;
 
-  constructor(@Inject(MAT_DIALOG_DATA) private messageData: any, private dialogRef: MatDialogRef<ComposeMessageDialogComponent>, private http: HttpService) {
+  constructor(@Inject(MAT_DIALOG_DATA) private messageData: any,
+              private dialogRef: MatDialogRef<ComposeMessageDialogComponent>,
+              private spinner: ProgressSpinnerService,
+              private http: HttpService) {
     dialogRef.disableClose = true;
   }
-
-  ngOnInit() {
-  }
-
 
   sendMessage() {
     const senderProfileId: string = this.messageData.senderProfileId;
@@ -34,7 +35,7 @@ export class ComposeMessageDialogComponent implements OnInit {
 
     this.http.post(path, message)
       .subscribe(() => {
-        this.dialogRef.close()
+        this.spinner.hide();
       }, () => {
         alert("error sending message");
         this.dialogRef.close()

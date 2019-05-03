@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { HttpService } from '../common/service/http/http.service';
 import { AppStorage } from '../common/util/app-storage';
+import { ProgressSpinnerService } from '../common/service/progress-spinner/progress-spinner.service';
 
 enum DisplayState {
   INDIVIDUAL_MESSAGE = 1,
@@ -23,27 +24,47 @@ export class MessagesComponent implements OnInit {
 
   displayState: DisplayState = DisplayState.INBOX;
 
-  constructor(private http: HttpService) {
+  constructor(private spinner: ProgressSpinnerService, private http: HttpService) {
   }
 
   ngOnInit() {
+    this.spinner.show();
     const profileId: string = AppStorage.getProfileId();
+    Promise.all([
+      this.loadReceivedMessages(profileId),
+      this.loadSentMessages(profileId)
+    ]).then(() => {
+      this.displayedMessages = this.receivedMessages;
+      this.spinner.hide();
+    });
+  }
 
-    const receivedMessagePath: string = '/profiles/' + profileId + '/messages';
-    this.http.get(receivedMessagePath)
-      .subscribe(response => {
-        // @ts-ignore
-        this.receivedMessages = response;
-        this.displayedMessages = this.receivedMessages;
-      });
+  private loadReceivedMessages(profileId: string): Promise<any> {
+    return new Promise(resolve => {
+      const receivedMessagePath: string = '/profiles/' + profileId + '/messages';
+      this.http.get(receivedMessagePath)
+        .subscribe(response => {
+          // @ts-ignore
+          this.receivedMessages = response;
+          resolve();
+        }, () => {
+          resolve();
+        });
+    });
+  }
 
-    const sentMessagePath: string = '/profiles/' + profileId + '/messages/sent';
-    this.http.get(sentMessagePath)
-      .subscribe(response => {
-        // @ts-ignore
-        this.sentMessages = response;
-      });
-
+  private loadSentMessages(profileId: string): Promise<any> {
+    return new Promise(resolve => {
+      const sentMessagePath: string = '/profiles/' + profileId + '/messages/sent';
+      this.http.get(sentMessagePath)
+        .subscribe(response => {
+          // @ts-ignore
+          this.sentMessages = response;
+          resolve();
+        }, () => {
+          resolve();
+        });
+    });
   }
 
   viewInbox() {

@@ -8,10 +8,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UiController {
 
+    @Value("${andband.api-gateway.endpoint}")
+    private String apiUri;
+
+    @Value("${andband.images.uri}")
+    private String imagesUri;
+
+    @Value("${google.recaptcha-api.site-key}")
+    private String recaptchaKey;
+
     @GetMapping({"/*", "/**/{static:[^\\\\.]*}"})
-    public String index(Model model, @Value("${andband.api-gateway.endpoint}") String apiUri, @Value("${andband.images.uri}") String imagesUri) {
+    public String index(Model model) {
         model.addAttribute("apiUri", apiUri);
         model.addAttribute("imagesUri", imagesUri);
+        model.addAttribute("recaptchaKey", recaptchaKey);
         return "index";
     }
 

@@ -15,4 +15,9 @@ export class DomainInfo {
     return document.querySelector("meta[name='imagesUri']").content;
   }
 
+  static getRecaptchaKey(): string {
+    // @ts-ignore
+    return document.querySelector("meta[name='recaptchaKey']").content;
+  }
+
 }
