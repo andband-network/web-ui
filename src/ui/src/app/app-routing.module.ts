@@ -7,23 +7,20 @@ import { ProfileComponent } from './profile/profile.component';
 import { MessagesComponent } from './messages/messages.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { AuthGuard } from './common/service/auth/guard/auth-guard.service';
+import { AnonymousAuthGuard } from './common/service/auth/guard/anonymous-auth-guard.service';
+import { RedirectComponent } from './common/component/redirect/redirect.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'confirm-registration/:token',
-    component: RegistrationComponent
-  },
-  {
-    path: 'account',
-    component: AccountComponent
+    component: HomeComponent,
+    canActivate: [AnonymousAuthGuard]
   },
   {
     path: 'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile/:profileId',
@@ -31,15 +28,26 @@ const routes: Routes = [
   },
   {
     path: 'messages',
-    component: MessagesComponent
+    component: MessagesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'search-results',
     component: SearchResultsComponent
   },
   {
+    path: 'account',
+    component: AccountComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'confirm-registration/:token',
+    component: RegistrationComponent,
+    canActivate: [AnonymousAuthGuard]
+  },
+  {
     path: '**',
-    component: HomeComponent// TODO - redirect component
+    component: RedirectComponent
   }
 ];
 

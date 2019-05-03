@@ -28,11 +28,13 @@ export class ProfileComponent implements OnInit {
   editMode: boolean;
   private originalProfile: Profile;
 
-  constructor(private route: ActivatedRoute,
-              private spinner: ProgressSpinnerService,
-              private http: HttpService,
-              private authService: AuthService,
-              private dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private spinner: ProgressSpinnerService,
+    private http: HttpService,
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) {
   }
 
   ngOnInit() {

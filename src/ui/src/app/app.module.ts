@@ -20,6 +20,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { ComposeMessageDialogComponent } from './messages/compose-message/compose-message-dialog.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { ConfirmationModalDialogComponent } from './common/component/dialog/confirmation-model/confirmation-modal-dialog.component';
+import { RedirectComponent } from './common/component/redirect/redirect.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ConfirmationModalDialogComponent } from './common/component/dialog/conf
     MessagesComponent,
     ComposeMessageDialogComponent,
     RegistrationComponent,
-    ConfirmationModalDialogComponent
+    ConfirmationModalDialogComponent,
+    RedirectComponent
   ],
   entryComponents: [
     ComposeMessageDialogComponent,
