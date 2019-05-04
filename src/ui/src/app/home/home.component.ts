@@ -15,8 +15,6 @@ import { DomainInfo } from '../common/util/domain-info';
 })
 export class HomeComponent implements OnInit {
 
-  recaptchaKey: string;
-
   constructor(private router: Router,
               private spinner: ProgressSpinnerService,
               private http: HttpService,
@@ -29,8 +27,8 @@ export class HomeComponent implements OnInit {
   }
 
   private createRecaptchaElement() {
-    this.recaptchaKey = DomainInfo.getRecaptchaKey();
-    const recaptchaElement: string = '<div class="g-recaptcha" data-sitekey="' + this.recaptchaKey + '"></div>';
+    const recaptchaKey: string = DomainInfo.getRecaptchaKey();
+    const recaptchaElement: string = '<div class="g-recaptcha" data-sitekey="' + recaptchaKey + '"></div>';
     document.getElementById('g-recaptcha').innerHTML = recaptchaElement;
   }
 
@@ -44,6 +42,8 @@ export class HomeComponent implements OnInit {
             AppStorage.setProfileId(profile.id);
             this.spinner.hide();
             this.router.navigate(['/profile']);
+          }, error => {
+            console.log(error);
           });
       });
   }
@@ -56,8 +56,8 @@ export class HomeComponent implements OnInit {
       .subscribe(() => {
         this.spinner.hide();
         this.showRegistrationEmailSentDialog();
-      }, () => {
-        this.spinner.hide();
+      }, (error) => {
+        console.log(error);
         this.dialogService.showSystemErrorDialog();
       });
   }
