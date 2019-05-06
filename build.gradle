@@ -17,15 +17,9 @@ repositories {
     mavenCentral()
 }
 
-configurations {
-    dev
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-    dev 'org.springframework.boot:spring-boot-devtools'
 }
 
 task npmInstall(type:Exec) {
@@ -74,5 +68,4 @@ bootRun.dependsOn ngBuild
 
 bootRun {
     systemProperties = System.properties
-    classpath = sourceSets.main.runtimeClasspath + configurations.dev
 }
