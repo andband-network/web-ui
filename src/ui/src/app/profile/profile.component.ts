@@ -27,6 +27,8 @@ export class ProfileComponent implements OnInit {
   isProfileOwner: boolean;
   editMode: boolean;
   private originalProfile: Profile;
+  private map;
+  private mapMarker;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,6 +62,9 @@ export class ProfileComponent implements OnInit {
         // @ts-ignore
         this.profile = response;
         this.updateProfileImage(this.profile.imageId);
+        if (this.isProfileOwner || this.profile.showLocation) {
+          this.loadGoogleMaps(this.profile);
+        }
       });
 
     if (this.userIsLoggedIn) {
@@ -71,7 +76,6 @@ export class ProfileComponent implements OnInit {
   }
 
   private loadConnections(profileId: string): void {
-    console.log('loadConnections');
     const path: string = '/profiles/' + profileId + '/connections';
     this.http.get(path)
       .subscribe(response => {
@@ -156,6 +160,17 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  setShowLocation(event) {
+    const showLocation: boolean = event.checked;
+    this.profile.showLocation = showLocation;
+    const location: Location = this.profile.location;
+    if (showLocation && location.lat !== 0 && location.lng !== 0) {
+      AppStorage.setLocationSearchEnabled(true);
+    } else {
+      AppStorage.setLocationSearchEnabled(false);
+    }
+  }
+
   private updateProfileImage(imageId: string): void {
     this.profileImageLocation = this.imagesUri + '/' + imageId + '?' + new Date().getTime();
   }
@@ -168,6 +183,66 @@ export class ProfileComponent implements OnInit {
       }
     };
     this.dialog.open(ConfirmationModalDialogComponent, dialogConfig);
+  }
+
+  private loadGoogleMaps(profile: Profile) {
+    const location = ProfileComponent.getMapLocation(profile);
+
+    // @ts-ignore
+    this.map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 11,
+      center: location,
+      styles: [
+        {
+          featureType: 'administrative.locality',
+          elementType: 'labels.text.fill'
+        }
+      ]
+    });
+    if (this.isProfileOwner) {
+      // @ts-ignore
+      google.maps.event.addListener(this.map, 'click', this.clickMap.bind(this));
+    }
+
+    if (ProfileComponent.hasMapLocationSet(profile)) {
+      this.addMarker(location, this.map);
+    }
+  }
+
+  private static getMapLocation(profile: Profile) {
+    if (ProfileComponent.hasMapLocationSet(profile)) {
+      return profile.location;
+    } else {
+      // dublin
+      return {lat: 53.3223925, lng: -6.2676825};
+    }
+  }
+
+  private static hasMapLocationSet(profile: Profile): boolean {
+    const location = profile.location;
+    return location.lat != 0 && location.lng != 0;
+  }
+
+  private clickMap(event) {
+    if (this.editMode) {
+      if (this.mapMarker) {
+        this.mapMarker.setMap(null);
+      }
+      const location = {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng()
+      };
+      this.addMarker(location, this.map);
+    }
+  }
+
+  private addMarker(location, map) {
+    // @ts-ignore
+    this.mapMarker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+    this.profile.location = location;
   }
 
 }

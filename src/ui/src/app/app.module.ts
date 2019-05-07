@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatDialogModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatInputModule } from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -21,6 +21,7 @@ import { ComposeMessageDialogComponent } from './messages/compose-message/compos
 import { RegistrationComponent } from './registration/registration.component';
 import { ConfirmationModalDialogComponent } from './common/component/dialog/confirmation-model/confirmation-modal-dialog.component';
 import { RedirectComponent } from './common/component/redirect/redirect.component';
+import { SearchDialogComponent } from './search/search-dialog/search-dialog.component';
 
 
 @NgModule({
@@ -35,11 +36,13 @@ import { RedirectComponent } from './common/component/redirect/redirect.componen
     ComposeMessageDialogComponent,
     RegistrationComponent,
     ConfirmationModalDialogComponent,
-    RedirectComponent
+    RedirectComponent,
+    SearchDialogComponent
   ],
   entryComponents: [
     ComposeMessageDialogComponent,
-    ConfirmationModalDialogComponent
+    ConfirmationModalDialogComponent,
+    SearchDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { RedirectComponent } from './common/component/redirect/redirect.componen
     MatButtonModule,
     MatInputModule,
     MatDialogModule,
+    MatCheckboxModule,
     NgxSpinnerModule,
     JwtModule.forRoot({
       config: {

@@ -2,7 +2,8 @@ export class AppStorage {
 
   private static readonly type = {
     accessToken: 'access_token',
-    profileId: 'profile_id'
+    profileId: 'profile_id',
+    locationSearchEnabled: 'location_search_enabled'
   };
 
   static setAccessToken(accessToken: string): void {
@@ -19,6 +20,14 @@ export class AppStorage {
 
   static getProfileId(): string {
     return localStorage.getItem(this.type.profileId);
+  }
+
+  static setLocationSearchEnabled(enabled: boolean): void {
+    localStorage.setItem(this.type.locationSearchEnabled, String(enabled));
+  }
+
+  static getLocationSearchEnabled(): boolean {
+    return localStorage.getItem(this.type.locationSearchEnabled) === 'true';
   }
 
   static clear(): void {

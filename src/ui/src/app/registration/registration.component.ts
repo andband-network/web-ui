@@ -36,7 +36,7 @@ export class RegistrationComponent implements OnInit {
     this.dialogService.showModelDialog(messageText, buttonText)
       .afterClosed()
       .subscribe(() => {
-        this.router.navigate(['']);
+        this.router.navigate(['/']);
       });
   }
 

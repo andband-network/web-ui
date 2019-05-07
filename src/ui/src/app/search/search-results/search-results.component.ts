@@ -22,15 +22,23 @@ export class SearchResultsComponent implements OnInit {
     this.imagesUri = DomainInfo.getImagesUri();
     this.route.queryParams.subscribe(params => {
       const keyWords: Array<string> = params.keyWords;
+      const rangeInKilometers: number = params.rangeInKilometers;
       if (keyWords) {
-        this.searchProfiles(keyWords);
+        this.searchProfiles(keyWords, rangeInKilometers);
       }
     });
   }
 
-  private searchProfiles(keyWords: Array<string>) {
+  private searchProfiles(keyWords: Array<string>, rangeInKilometers: number) {
     this.spinner.show();
-    if (keyWords) {
+    if (rangeInKilometers) {
+      this.searchService.searchProfilesWithRange(keyWords, rangeInKilometers)
+        .subscribe(response => {
+          // @ts-ignore
+          this.searchResults = response;
+          this.spinner.hide()
+        });
+    } else {
       this.searchService.searchProfiles(keyWords)
         .subscribe(response => {
           // @ts-ignore

@@ -23,10 +23,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createRecaptchaElement();
+    HomeComponent.createRecaptchaElement();
   }
 
-  private createRecaptchaElement() {
+  private static createRecaptchaElement() {
     const recaptchaKey: string = DomainInfo.getRecaptchaKey();
     const recaptchaElement: string = '<div class="g-recaptcha" data-sitekey="' + recaptchaKey + '"></div>';
     document.getElementById('g-recaptcha').innerHTML = recaptchaElement;
@@ -36,15 +36,7 @@ export class HomeComponent implements OnInit {
     this.spinner.show();
     this.authService.login(credentials)
       .subscribe(() => {
-        this.http.get('/profiles')
-          .subscribe(profile => {
-            // @ts-ignore
-            AppStorage.setProfileId(profile.id);
-            this.spinner.hide();
-            this.router.navigate(['/profile']);
-          }, error => {
-            console.log(error);
-          });
+        this.getProfileDetails()
       });
   }
 
@@ -58,8 +50,28 @@ export class HomeComponent implements OnInit {
         this.showRegistrationEmailSentDialog();
       }, (error) => {
         console.log(error);
+        this.spinner.hide();
         this.dialogService.showSystemErrorDialog();
       });
+  }
+
+  private getProfileDetails() {
+    this.http.get('/profiles')
+      .subscribe(profile => {
+        // @ts-ignore
+        HomeComponent.setAppStorageValues(profile);
+        this.spinner.hide();
+        this.router.navigate(['/profile']);
+      }, error => {
+        console.log(error);
+      });
+  }
+
+  private static setAppStorageValues(profile: Profile) {
+    AppStorage.setProfileId(profile.id);
+    if (profile.showLocation && profile.location.lat !== 0 && profile.location.lng !== 0) {
+      AppStorage.setLocationSearchEnabled(true);
+    }
   }
 
   private createRegistrationRequest(userDetails): any {
