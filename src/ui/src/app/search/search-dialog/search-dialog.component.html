@@ -1,0 +1,11 @@
+<form class="example-form">
+  <!--<mat-form-field class="example-full-width">-->
+  key words<input type="text" [(ngModel)]="keyWords" name="keyWords">
+  range in kilometers<input type="text" [(ngModel)]="rangeInKilometers" name="rangeInKilometers">
+  <!--</mat-form-field>-->
+
+
+  <button mat-raised-button (click)="search()">Search</button>
+  <button mat-raised-button (click)="close()">Cancel</button>
+
+</form>
