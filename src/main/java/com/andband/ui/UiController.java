@@ -17,11 +17,15 @@ public class UiController {
     @Value("${google.recaptcha-api.site-key}")
     private String recaptchaKey;
 
+    @Value("${google.maps-api.key}")
+    private String googleMapsKey;
+
     @GetMapping({"/*", "/**/{static:[^\\\\.]*}"})
     public String index(Model model) {
         model.addAttribute("apiUri", apiUri);
         model.addAttribute("imagesUri", imagesUri);
         model.addAttribute("recaptchaKey", recaptchaKey);
+        model.addAttribute("googleMapsKey", googleMapsKey);
         return "index";
     }
 
