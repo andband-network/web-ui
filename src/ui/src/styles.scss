@@ -3,4 +3,41 @@
 body {
   margin: 0;
   line-height: 1.5;
+
+  .form-card {
+    /deep/ .mat-card-header-text {
+      margin: auto;
+    }
+
+    form {
+      .form-table {
+        width: 100%;
+
+        mat-form-field {
+          width: 100%;
+        }
+
+        tr td {
+          padding-top: 4%;
+        }
+      }
+    }
+
+    mat-card-actions {
+      button {
+        margin: auto;
+
+        /deep/ .mat-button-wrapper {
+          font-size: 1.3em
+        }
+      }
+    }
+  }
+
+}
+
+search-dialog {
+  .dialog-wrapper {
+    width: 500px;
+  }
 }

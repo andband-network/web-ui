@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+
 import { AuthService } from '../common/service/auth/auth.service';
+import { SearchDialogComponent } from '../search/search-dialog/search-dialog.component';
 
 @Component({
   selector: 'banner',
@@ -11,7 +14,7 @@ export class BannerComponent implements OnInit {
 
   activeRoute: string;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -25,6 +28,15 @@ export class BannerComponent implements OnInit {
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
+  }
+
+  search(): void {
+    this.dialog.open(SearchDialogComponent);
+  }
+
+  logOut(): void {
+    AuthService.logOut();
+    this.router.navigate(['/']);
   }
 
 }

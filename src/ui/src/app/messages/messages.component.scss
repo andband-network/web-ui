@@ -1,9 +1,51 @@
-.wrapper {
-  display: grid;
-  grid-template-columns: 20% 80%
+.messages-wrapper {
+
+  mat-drawer {
+    width: 15%;
+
+    .side-nav {
+      margin-top: 10%;
+
+      button {
+        display: block;
+        margin-top: 5%;
+        width: 100%;
+      }
+
+      button.selected {
+        background-color: #f0efff;
+      }
+    }
+  }
+
+  .mat-drawer-content {
+    margin-left: 15%;
+
+    .table-wrapper {
+      overflow: auto;
+
+      table {
+        width: 100%;
+
+        .mat-row:hover {
+          background-color: #f0efff;
+          cursor: pointer;
+        }
+
+        tr.mat-footer-row {
+          font-weight: bold;
+        }
+
+        .mat-table-sticky {
+          border-top: 1px solid #e0e0e0;
+        }
+      }
+    }
+
+    table.message-table {
+      width: 100%;
+    }
+  }
+
 }
 
-.message-row {
-  display: grid;
-  grid-template-columns: 20% 80%
-}

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { NavigationExtras, Router } from '@angular/router';
 
-import { HttpService } from '../../common/service/http/http.service';
 import { AppStorage } from '../../common/util/app-storage';
+import { DialogService } from '../../common/component/dialog/dialog.service';
 
 @Component({
   selector: 'search-dialog',
@@ -13,10 +13,11 @@ import { AppStorage } from '../../common/util/app-storage';
 export class SearchDialogComponent implements OnInit{
 
   canSearchRange: boolean;
+  searchLocationRange: boolean;
   keyWords: string;
   rangeInKilometers: number;
 
-  constructor(private dialogRef: MatDialogRef<SearchDialogComponent>, private router: Router, private http: HttpService) {
+  constructor(private dialogRef: MatDialogRef<SearchDialogComponent>, private router: Router, private dialogService: DialogService) {
     dialogRef.disableClose = true;
   }
 
@@ -24,16 +25,20 @@ export class SearchDialogComponent implements OnInit{
     this.canSearchRange = AppStorage.getLocationSearchEnabled();
   }
 
-  search() {
-    const keyWords: Array<string> = this.keyWords.split(' ');
+  search(searchForm) {
+    const keyWords: Array<string> = searchForm.keyWords.split(' ');
     const navigationExtras: NavigationExtras = {
       queryParams: {
         keyWords: keyWords,
-        rangeInKilometers: this.rangeInKilometers
+        rangeInKilometers: searchForm.rangeInKilometers
       }
     };
     this.dialogRef.close();
     this.router.navigate(['/search-results'], navigationExtras);
+  }
+
+  showLocationRangeMessage() {
+    this.dialogService.showModelDialog('You must set you profiles location and make it visible to search by location range', 'OK');
   }
 
   close() {

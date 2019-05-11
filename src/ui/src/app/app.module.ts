@@ -11,6 +11,8 @@ import {
   MatIconModule,
   MatInputModule,
   MatMenuModule,
+  MatSidenavModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -61,10 +63,12 @@ import { BannerComponent } from './banner/banner.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSidenavModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
+    MatTableModule,
     MatDialogModule,
     MatCheckboxModule,
     MatToolbarModule,

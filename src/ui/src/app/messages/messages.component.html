@@ -1,40 +1,119 @@
-<div class="wrapper">
+<div class="messages-wrapper">
 
-  <div class="side-bar">
-    <button (click)="viewInbox()">Inbox</button>
-    <button (click)="viewSent()">Sent</button>
-  </div>
+  <mat-drawer-container>
 
-  <div class="messages" *ngIf="displayState !== 1">
-    <div class="message-row">
-      <div>{{displayState === 2 ? 'From' : 'To'}}</div>
-      <div>Subject</div>
-    </div>
-    <div *ngFor="let message of displayedMessages">
-      <div class="message-row" (click)="viewMessage(message)">
-        <div *ngIf="displayState === 2" class="name">{{message.senderProfileName}}</div>
-        <div *ngIf="displayState === 3" class="name">{{message.receiverProfileName}}</div>
-        <div class="subject">{{message.subject}}</div>
+    <mat-drawer mode="side" opened>
+
+      <div class="side-nav">
+        <button (click)="viewInbox()"
+                [color]="displayState === 1 ? 'primary' : null"
+                [class.selected]="displayState === 1"
+                mat-button>
+          Inbox ({{inputMessageCount}})
+        </button>
+        <button (click)="viewSent()"
+                [color]="displayState === 2 ? 'primary' : null"
+                [class.selected]="displayState === 2"
+                mat-button>
+          Sent ({{sentMessageCount}})
+        </button>
       </div>
-    </div>
-  </div>
 
-  <div class="message" *ngIf="displayState === 1">
-    <div *ngIf="displayState === 2">
-      from: {{displayedMessage.senderProfileName}}
-    </div>
-    <div *ngIf="displayState === 3">
-      from: {{displayedMessage.receiverProfileName}}
-    </div>
-    <div>
-      date: {{displayedMessage.createdDate}}
-    </div>
-    <div>
-      subject: {{displayedMessage.subject}}
-    </div>
-    <div>
-      message: {{displayedMessage.body}}
-    </div>
-  </div>
+    </mat-drawer>
+
+    <mat-drawer-content>
+
+      <div *ngIf="displayState === 1" class="table-wrapper">
+        <table mat-table [dataSource]="inbox">
+
+          <ng-container matColumnDef="from">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>From</th>
+            <td mat-cell *matCellDef="let message">{{message.senderProfileName}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="subject">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject</th>
+            <td mat-cell *matCellDef="let message"> {{message.subject}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+            <td mat-cell *matCellDef="let message"> {{message.createdDate | date}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="inboxDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: inboxDisplayedColumns;" (click)="viewMessage(row)"></tr>
+        </table>
+      </div>
+
+      <div *ngIf="displayState === 2" class="table-wrapper">
+        <table mat-table [dataSource]="sentMessages">
+
+          <ng-container matColumnDef="from">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>To</th>
+            <td mat-cell *matCellDef="let message">{{message.receiverProfileName}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="subject">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject</th>
+            <td mat-cell *matCellDef="let message"> {{message.subject}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+            <td mat-cell *matCellDef="let message"> {{message.createdDate | date}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="inboxDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: sentMessagesDisplayedColumns;" (click)="viewMessage(row)"></tr>
+        </table>
+      </div>
+
+
+      <div class="message-content" *ngIf="displayState === 3 || displayState === 4">
+
+        <mat-card class="message-card">
+
+          <mat-card-header>
+            <mat-card-title>{{displayedMessage.subject}}</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+
+            <table class="message-table" cellspacing="0">
+              <tr>
+                <td *ngIf="displayState === 3">
+                  {{'From: ' + displayedMessage.senderProfileName}}
+                </td>
+                <td *ngIf="displayState === 4">
+                  {{'To: ' + displayedMessage.receiverProfileName}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                 {{'Date: ' + (displayedMessage.createdDate | date)}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <hr>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{displayedMessage.body}}
+                </td>
+              </tr>
+            </table>
+
+          </mat-card-content>
+
+        </mat-card>
+
+      </div>
+
+    </mat-drawer-content>
+
+  </mat-drawer-container>
 
 </div>

@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 
 import { HttpService } from '../common/service/http/http.service';
 import { AppStorage } from '../common/util/app-storage';
 import { ProgressSpinnerService } from '../common/service/progress-spinner/progress-spinner.service';
 
 enum DisplayState {
-  INDIVIDUAL_MESSAGE = 1,
-  INBOX = 2,
-  SENT = 3
+  INBOX = 1,
+  SENT = 2,
+  RECEIVED_MESSAGE = 3,
+  SENT_MESSAGE = 4
 }
 
 @Component({
@@ -17,10 +19,13 @@ enum DisplayState {
 })
 export class MessagesComponent implements OnInit {
 
-  displayedMessages: Array<Message>;
+  inputMessageCount: number;
+  sentMessageCount: number;
   displayedMessage: Message;
-  private receivedMessages: Array<Message>;
-  private sentMessages: Array<Message>;
+  inbox: MatTableDataSource<Message>;
+  inboxDisplayedColumns: string[] = ['from', 'subject', 'date'];
+  sentMessages: MatTableDataSource<Message>;
+  sentMessagesDisplayedColumns: string[] = ['from', 'subject', 'date'];
 
   displayState: DisplayState = DisplayState.INBOX;
 
@@ -34,7 +39,6 @@ export class MessagesComponent implements OnInit {
       this.loadReceivedMessages(profileId),
       this.loadSentMessages(profileId)
     ]).then(() => {
-      this.displayedMessages = this.receivedMessages;
       this.spinner.hide();
     });
   }
@@ -45,7 +49,10 @@ export class MessagesComponent implements OnInit {
       this.http.get(receivedMessagePath)
         .subscribe(response => {
           // @ts-ignore
-          this.receivedMessages = response;
+          this.inbox = new MatTableDataSource<Message>(response);
+          // @ts-ignore
+          this.inputMessageCount = response.length;
+          console.log(response);
           resolve();
         }, () => {
           resolve();
@@ -59,7 +66,9 @@ export class MessagesComponent implements OnInit {
       this.http.get(sentMessagePath)
         .subscribe(response => {
           // @ts-ignore
-          this.sentMessages = response;
+          this.sentMessages = new MatTableDataSource<Message>(response);
+          // @ts-ignore
+          this.sentMessageCount = response.length;
           resolve();
         }, () => {
           resolve();
@@ -68,18 +77,21 @@ export class MessagesComponent implements OnInit {
   }
 
   viewInbox() {
-    this.displayedMessages = this.receivedMessages;
     this.displayState = DisplayState.INBOX;
   }
 
   viewSent() {
-    this.displayedMessages = this.sentMessages;
     this.displayState = DisplayState.SENT;
   }
 
   viewMessage(message: Message) {
+    console.log(message);
     this.displayedMessage = message;
-    this.displayState = DisplayState.INDIVIDUAL_MESSAGE;
+    if (this.displayState === DisplayState.INBOX) {
+      this.displayState = DisplayState.RECEIVED_MESSAGE;
+    } else {
+      this.displayState = DisplayState.SENT_MESSAGE;
+    }
   }
 
 }

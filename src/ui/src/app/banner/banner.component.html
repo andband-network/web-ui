@@ -11,6 +11,16 @@
 
     </mat-toolbar-row>
 
+    <mat-toolbar-row *ngIf="isLoggedIn()">
+
+      <button routerLink="/profile" class="logo" mat-button>AndBand</button>
+      <span class="spacer"></span>
+      <button routerLink="/messages" mat-button>Messages</button>
+      <button (click)="search()" mat-button>Search</button>
+      <button (click)="logOut()" mat-button>Logout</button>
+
+    </mat-toolbar-row>
+
   </mat-toolbar>
 
 </div>

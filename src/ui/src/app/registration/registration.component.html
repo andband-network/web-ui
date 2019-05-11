@@ -1,7 +1,7 @@
 <div class="page-wrapper">
 
   <mat-card class="form-card">
-    <form [formGroup]="registrationForm" (ngSubmit)="register(registrationForm.value)">
+    <form [formGroup]="registrationForm" (ngSubmit)="register(registrationForm.value)" autocomplete="off">
 
       <mat-card-header>
         <mat-card-title>Fill in your details below to register</mat-card-title>

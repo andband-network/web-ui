@@ -4,29 +4,6 @@
 
   <div class="content-wrapper">
 
-    <div *ngIf="isLoggedIn()" class="banner">
-
-      <div class="container">
-        <h2 class="logo">AndBand</h2>
-
-        <div class="search">
-
-          <search-box></search-box>
-
-          <a [routerLink]="" (click)="openSearchDialog()">Advanced Search</a>
-
-        </div>
-
-        <div class="clearfix"></div>
-
-      </div>
-
-      <button (click)="logOut()">Sign Out</button>
-
-      <a routerLink="/messages">Messages</a>
-
-    </div>
-
     <router-outlet></router-outlet>
 
   </div>
