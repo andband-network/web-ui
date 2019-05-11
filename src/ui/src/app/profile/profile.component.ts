@@ -47,7 +47,9 @@ export class ProfileComponent implements OnInit {
         profileId = AppStorage.getProfileId();
       }
 
-      this.isProfileOwner = profileId === AppStorage.getProfileId();
+      if (this.userIsLoggedIn) {
+        this.isProfileOwner = profileId === AppStorage.getProfileId();
+      }
 
       this.loadProfile(profileId);
     });
@@ -82,7 +84,7 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  private loadConnectionStatus(profileId: string) {
+  private loadConnectionStatus(profileId: string): void {
     const ownerProfileId: string = AppStorage.getProfileId();
     const path: string = '/profiles/' + ownerProfileId + '/connections/' + profileId + '/status';
     this.http.get(path)
@@ -100,7 +102,7 @@ export class ProfileComponent implements OnInit {
     this.addRemoveConnectionAction('delete');
   }
 
-  private addRemoveConnectionAction(action: 'post' | 'delete') {
+  private addRemoveConnectionAction(action: 'post' | 'delete'): void {
     const loggedInUserProfileId: string = AppStorage.getProfileId();
     const connectionProfileId: string = this.profile.id;
     const path: string = '/profiles/' + loggedInUserProfileId + '/connections/' + connectionProfileId;
@@ -158,17 +160,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  setShowLocation(event) {
-    const showLocation: boolean = event.checked;
-    this.profile.showLocation = showLocation;
-    const location: Location = this.profile.location;
-    if (showLocation && location.lat !== 0 && location.lng !== 0) {
-      AppStorage.setLocationSearchEnabled(true);
-    } else {
-      AppStorage.setLocationSearchEnabled(false);
-    }
-  }
-
   private updateProfileImage(imageId: string): void {
     this.profileImageLocation = this.imagesUri + '/' + imageId + '?' + new Date().getTime();
   }
@@ -183,7 +174,7 @@ export class ProfileComponent implements OnInit {
     this.dialog.open(ConfirmationModalDialogComponent, dialogConfig);
   }
 
-  private loadGoogleMaps(profile: Profile) {
+  private loadGoogleMaps(profile: Profile): void {
     const location = ProfileComponent.getMapLocation(profile);
 
     // @ts-ignore
@@ -221,7 +212,7 @@ export class ProfileComponent implements OnInit {
     return location.lat != 0 && location.lng != 0;
   }
 
-  private clickMap(event) {
+  private clickMap(event): void {
     if (this.editMode) {
       if (this.mapMarker) {
         this.mapMarker.setMap(null);
@@ -234,7 +225,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  private addMarker(location, map) {
+  private addMarker(location, map): void {
     // @ts-ignore
     this.mapMarker = new google.maps.Marker({
       position: location,

@@ -2,8 +2,8 @@ export class AppStorage {
 
   private static readonly type = {
     accessToken: 'access_token',
-    profileId: 'profile_id',
-    locationSearchEnabled: 'location_search_enabled'
+    profile: 'profile',
+    profileId: 'profile_id'
   };
 
   static setAccessToken(accessToken: string): void {
@@ -14,20 +14,18 @@ export class AppStorage {
     return localStorage.getItem(this.type.accessToken);
   }
 
-  static setProfileId(profileId: string): void {
-    localStorage.setItem(this.type.profileId, profileId);
+  static setProfile(profile: Profile): void {
+    localStorage.setItem(this.type.profile, JSON.stringify(profile));
+    localStorage.setItem(this.type.profileId, profile.id);
+  }
+
+  static getProfile(): Profile {
+    const profileJson = localStorage.getItem(this.type.profile);
+    return JSON.parse(profileJson);
   }
 
   static getProfileId(): string {
     return localStorage.getItem(this.type.profileId);
-  }
-
-  static setLocationSearchEnabled(enabled: boolean): void {
-    localStorage.setItem(this.type.locationSearchEnabled, String(enabled));
-  }
-
-  static getLocationSearchEnabled(): boolean {
-    return localStorage.getItem(this.type.locationSearchEnabled) === 'true';
   }
 
   static clear(): void {

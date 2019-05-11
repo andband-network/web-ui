@@ -64,7 +64,7 @@
         <p>show location: {{profile?.showLocation}}</p>
       </div>
       <div *ngIf="editMode">
-        <p>show location</p> <mat-checkbox [(ngModel)]="profile.showLocation" (change)="setShowLocation($event)">Check me!</mat-checkbox>
+        <p>show location</p> <mat-checkbox [(ngModel)]="profile.showLocation">Show location</mat-checkbox>
       </div>
 
     </div>

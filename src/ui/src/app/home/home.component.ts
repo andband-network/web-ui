@@ -23,27 +23,20 @@ export class HomeComponent {
     this.spinner.show();
     this.authService.login(credentials)
       .subscribe(() => {
-        this.getProfileDetails()
+        this.loadProfileDetails()
       });
   }
 
-  private getProfileDetails() {
+  private loadProfileDetails() {
     this.http.get('/profiles')
       .subscribe(profile => {
         // @ts-ignore
-        HomeComponent.setAppStorageValues(profile);
+        AppStorage.setProfile(profile);
         this.spinner.hide();
         this.router.navigate(['/profile']);
       }, error => {
         console.log(error);
       });
-  }
-
-  private static setAppStorageValues(profile: Profile) {
-    AppStorage.setProfileId(profile.id);
-    if (profile.showLocation && profile.location.lat !== 0 && profile.location.lng !== 0) {
-      AppStorage.setLocationSearchEnabled(true);
-    }
   }
 
 }
