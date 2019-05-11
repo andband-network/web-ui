@@ -1,30 +1,36 @@
-<div class="container">
+<div class="wrapper">
 
-  <div *ngIf="isLoggedIn()" class="banner">
+  <banner></banner>
 
-    <div class="container">
-      <h2 class="logo">AndBand</h2>
+  <div class="content-wrapper">
 
-      <div class="search">
+    <div *ngIf="isLoggedIn()" class="banner">
 
-        <search-box></search-box>
+      <div class="container">
+        <h2 class="logo">AndBand</h2>
 
-        <a [routerLink]="" (click)="openSearchDialog()">Advanced Search</a>
+        <div class="search">
+
+          <search-box></search-box>
+
+          <a [routerLink]="" (click)="openSearchDialog()">Advanced Search</a>
+
+        </div>
+
+        <div class="clearfix"></div>
 
       </div>
 
-      <div class="clearfix"></div>
+      <button (click)="logOut()">Sign Out</button>
+
+      <a routerLink="/messages">Messages</a>
 
     </div>
 
-    <button (click)="logOut()">Sign Out</button>
-
-    <a routerLink="/messages">Messages</a>
+    <router-outlet></router-outlet>
 
   </div>
 
-  <router-outlet></router-outlet>
+  <ngx-spinner></ngx-spinner>
 
 </div>
-
-<ngx-spinner></ngx-spinner>

@@ -1,25 +1,52 @@
+.content-wrapper {
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
 .banner {
   background-color: #b2b2b2;
 }
+
+mat-toolbar {
+  padding-left: 20%;
+  padding-right: 20%;
+}
+.banner {
+  padding-left: 20%;
+  padding-right: 20%;
+  mat-toolbar {
+    .spacer {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
 .banner .logo {
   margin: 15px;
   float: left;
   color: #ffffff;
 }
+
 .banner .login {
   margin: 15px 5px 5px 5px;
   float: right;
 }
+
 .banner a {
   color: white;
 }
+
 body {
   background-color: #dedede;
 }
 
 .btn.btn-primary {
-  background-color: #5a6268!important;
-  border-color: black!important;
+  background-color: #5a6268 !important;
+  border-color: black !important;
 }
 
 .main-div {
@@ -41,6 +68,7 @@ body {
   max-width: 80%;
   padding: 50px 70px 70px 71px;
 }
+
 .profile-details textarea {
   width: 100%;
 }

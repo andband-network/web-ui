@@ -1,0 +1,15 @@
+.banner {
+
+  mat-toolbar {
+    padding-left: 20%;
+    padding-right: 20%;
+
+    .logo {
+      font-size: 1.3em;
+    }
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+  }
+}

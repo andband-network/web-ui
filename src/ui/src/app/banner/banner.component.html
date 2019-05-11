@@ -1,0 +1,16 @@
+<div class="banner">
+
+  <mat-toolbar color="primary">
+
+    <mat-toolbar-row *ngIf="!isLoggedIn()">
+
+      <span class="logo">AndBand</span>
+      <span class="spacer"></span>
+      <button *ngIf="activeRoute !== '/register'" mat-button routerLink="register">Register</button>
+      <button *ngIf="activeRoute !== '/'" mat-button routerLink="/">Login</button>
+
+    </mat-toolbar-row>
+
+  </mat-toolbar>
+
+</div>
