@@ -1,56 +1,44 @@
-<div class="banner">
+<div class="page-wrapper">
 
-  <div class="container">
-    <h2 class="logo">AndBand</h2>
+  <mat-card class="form-card">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
 
-    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="login">
-      <div class="row">
-        <div class="col-5">
-          <input ngModel name="email" type="email" class="form-control" placeholder="Email Address">
-        </div>
-        <div class="col-5">
-          <input ngModel name="password" type="password" class="form-control" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-      </div>
-      <div class="row">
-        <div class="forgot-password col-5 offset-5">
-          <a>Forgot password?</a>
-        </div>
-      </div>
-    </form>
+      <mat-card-header>
+        <mat-card-title>Connect with musicians in your area</mat-card-title>
+      </mat-card-header>
 
-    <div class="clearfix"></div>
+      <mat-card-content>
 
-  </div>
+        <table class="form-table" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput ngModel placeholder="Email" name="email" required>
+                <mat-error>
+                  Please enter your email
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input matInput ngModel placeholder="Password" type="password" name="password" required>
+                <mat-error>
+                  Please enter your password
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
 
-</div>
+      </mat-card-content>
 
-<div class="main-content">
-  <div class="container">
-    <div class="panel">
-      <h3>Sign Up</h3>
-    </div>
-    <form #registerForm="ngForm" (ngSubmit)="resister(registerForm.value)">
-
-      <div class="form-group">
-        <input ngModel name="name" type="text" class="form-control" placeholder="Name">
-      </div>
-
-      <div class="form-group">
-        <input ngModel name="email" type="email" class="form-control" placeholder="Email Address">
-      </div>
-
-      <div class="form-group">
-        <input ngModel name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
-      </div>
-
-      <div id="g-recaptcha"></div>
-
-      <button type="submit">Register</button>
+      <mat-card-actions>
+        <button type="submit" [disabled]="loginForm.invalid" mat-raised-button color="primary">Login</button>
+      </mat-card-actions>
 
     </form>
+  </mat-card>
 
-
-  </div>
 </div>

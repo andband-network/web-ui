@@ -1,0 +1,42 @@
+.page-wrapper {
+
+  .slogan {
+    text-align: center;
+    font-family: 'Freight Sans Bold', Helvetica, Arial, sans-serif !important;
+  }
+
+  .form-card {
+    margin: 5% 30% 10% 30%;
+    padding: 2% 2% 5% 2%;
+
+    /deep/ .mat-card-header-text {
+      margin: auto;
+    }
+
+    form {
+      .form-table {
+        width: 100%;
+
+        mat-form-field {
+          width: 100%;
+        }
+
+        tr td {
+          padding-top: 4%;
+        }
+      }
+    }
+
+    mat-card-actions {
+      button {
+        display: block;
+        margin: auto;
+
+        /deep/ .mat-button-wrapper {
+          font-size: 1.3em
+        }
+      }
+    }
+  }
+
+}

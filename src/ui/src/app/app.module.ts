@@ -1,9 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatInputModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatToolbarModule
+} from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -18,11 +27,12 @@ import { SearchResultsComponent } from './search/search-results/search-results.c
 import { SearchBoxComponent } from './search/search-box/search-box.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ComposeMessageDialogComponent } from './messages/compose-message/compose-message-dialog.component';
-import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationConfirmationComponent } from './registration/confirmation/registration-confirmation.component';
 import { ConfirmationModalDialogComponent } from './common/component/dialog/confirmation-model/confirmation-modal-dialog.component';
 import { RedirectComponent } from './common/component/redirect/redirect.component';
 import { SearchDialogComponent } from './search/search-dialog/search-dialog.component';
-
+import { RegistrationComponent } from './registration/registration.component';
+import { BannerComponent } from './banner/banner.component';
 
 @NgModule({
   declarations: [
@@ -34,10 +44,12 @@ import { SearchDialogComponent } from './search/search-dialog/search-dialog.comp
     SearchBoxComponent,
     MessagesComponent,
     ComposeMessageDialogComponent,
-    RegistrationComponent,
+    RegistrationConfirmationComponent,
     ConfirmationModalDialogComponent,
     RedirectComponent,
-    SearchDialogComponent
+    SearchDialogComponent,
+    RegistrationComponent,
+    BannerComponent
   ],
   entryComponents: [
     ComposeMessageDialogComponent,
@@ -48,12 +60,17 @@ import { SearchDialogComponent } from './search/search-dialog/search-dialog.comp
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
     MatDialogModule,
     MatCheckboxModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
+    MatCardModule,
     NgxSpinnerModule,
     JwtModule.forRoot({
       config: {

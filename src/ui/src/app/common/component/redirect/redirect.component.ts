@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth/auth.service';
 
 @Component({
-  selector: 'app-redirect',
+  selector: 'redirect',
   templateUrl: './redirect.component.html',
   styleUrls: ['./redirect.component.scss']
 })

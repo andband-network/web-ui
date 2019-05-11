@@ -30,13 +30,11 @@ export class ProfileComponent implements OnInit {
   private map;
   private mapMarker;
 
-  constructor(
-    private route: ActivatedRoute,
-    private spinner: ProgressSpinnerService,
-    private http: HttpService,
-    private authService: AuthService,
-    private dialog: MatDialog
-  ) {
+  constructor(private route: ActivatedRoute,
+              private spinner: ProgressSpinnerService,
+              private http: HttpService,
+              private authService: AuthService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {

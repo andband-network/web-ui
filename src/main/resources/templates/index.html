@@ -11,17 +11,18 @@
     <meta name="recaptchaKey" th:content="${recaptchaKey}"/>
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
     <link rel="stylesheet" href="static/styles.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
 <app-root></app-root>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARwj8u-ngJ5TUNEAEj8M1HVVJU3pqyxIA" async defer></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script th:src="@{${'https://maps.googleapis.com/maps/api/js?key=' + googleMapsKey}}" async defer></script>
 <script type="text/javascript" src="static/runtime.js"></script>
 <script type="text/javascript" src="static/polyfills.js"></script>
 <script type="text/javascript" src="static/main.js"></script>
+
+<div id="googleRecaptcha"></div>
 
 </body>
 </html>

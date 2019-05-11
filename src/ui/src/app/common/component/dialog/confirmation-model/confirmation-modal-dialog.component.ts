@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
-  selector: 'app-confirmation-dialog',
+  selector: 'confirmation-dialog',
   templateUrl: './confirmation-modal-dialog.component.html',
   styleUrls: ['./confirmation-modal-dialog.component.scss']
 })

@@ -6,7 +6,7 @@ import { HttpService } from '../../common/service/http/http.service';
 import { AppStorage } from '../../common/util/app-storage';
 
 @Component({
-  selector: 'app-search-dialog',
+  selector: 'search-dialog',
   templateUrl: './search-dialog.component.html',
   styleUrls: ['./search-dialog.component.scss']
 })

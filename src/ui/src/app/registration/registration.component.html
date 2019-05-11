@@ -1,0 +1,81 @@
+<div class="page-wrapper">
+
+  <mat-card class="form-card">
+    <form [formGroup]="registrationForm" (ngSubmit)="register(registrationForm.value)">
+
+      <mat-card-header>
+        <mat-card-title>Fill in your details below to register</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <table class="form-table" cellspacing="0">
+
+          <tr>
+            <td>
+              <mat-form-field>
+                <input type="text"
+                       formControlName="username"
+                       placeholder="Name"
+                       name="username"
+                       matInput>
+                <mat-error *ngIf="username.invalid">
+                  Please enter your name
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-form-field>
+                <input type="text"
+                       formControlName="email"
+                       placeholder="Email"
+                       name="email"
+                       matInput>
+                <mat-error *ngIf="email.errors?.required">
+                  Please enter your email
+                </mat-error>
+                <mat-error *ngIf="email.errors?.email">
+                  Please enter a valid email address
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-form-field>
+                <input type="password"
+                       formControlName="password"
+                       placeholder="Password"
+                       name="password"
+                       min="8"
+                       matInput>
+                <mat-error *ngIf="password.errors?.required">
+                  Please enter a password
+                </mat-error>
+                <mat-error *ngIf="password.errors?.minlength">
+                  Password must be a minimum of 8 characters
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+
+        </table>
+
+        <div id="g-recaptcha" (mouseover)="startDigest()"></div>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button type="submit" [disabled]="registrationForm.invalid || !validRecaptcha()" mat-raised-button
+                color="primary">Register
+        </button>
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+
+</div>
