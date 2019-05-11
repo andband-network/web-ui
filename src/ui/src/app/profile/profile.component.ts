@@ -79,7 +79,6 @@ export class ProfileComponent implements OnInit {
       .subscribe(response => {
         // @ts-ignore
         this.connections = response;
-        console.log(this.connections);
       });
   }
 
@@ -117,7 +116,8 @@ export class ProfileComponent implements OnInit {
     const messageDialogConfig: any = {
       data: {
         senderProfileId: AppStorage.getProfileId(),
-        receiverProfileId: this.profile.id
+        receiverProfileId: this.profile.id,
+        receiverProfileName: this.profile.name,
       }
     };
     this.dialog.open(ComposeMessageDialogComponent, messageDialogConfig);

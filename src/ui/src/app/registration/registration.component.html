@@ -70,8 +70,11 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button type="submit" [disabled]="registrationForm.invalid || !validRecaptcha()" mat-raised-button
-                color="primary">Register
+        <button type="submit"
+                [disabled]="registrationForm.invalid || !validRecaptcha()"
+                mat-raised-button
+                color="primary">
+          Register
         </button>
       </mat-card-actions>
 

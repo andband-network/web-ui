@@ -2,22 +2,22 @@
 
   <mat-toolbar color="primary">
 
-    <mat-toolbar-row *ngIf="!isLoggedIn()">
+    <mat-toolbar-row>
 
-      <span class="logo">AndBand</span>
+      <button routerLink="/" class="logo" mat-button>AndBand</button>
       <span class="spacer"></span>
-      <button *ngIf="activeRoute !== '/register'" mat-button routerLink="register">Register</button>
-      <button *ngIf="activeRoute !== '/'" mat-button routerLink="/">Login</button>
 
-    </mat-toolbar-row>
+      <div *ngIf="!isLoggedIn()">
+        <button *ngIf="activeRoute !== '/register'" mat-button routerLink="register">Register</button>
+        <button *ngIf="activeRoute !== '/'" mat-button routerLink="/">Login</button>
+      </div>
 
-    <mat-toolbar-row *ngIf="isLoggedIn()">
-
-      <button routerLink="/profile" class="logo" mat-button>AndBand</button>
-      <span class="spacer"></span>
-      <button routerLink="/messages" mat-button>Messages</button>
-      <button (click)="search()" mat-button>Search</button>
-      <button (click)="logOut()" mat-button>Logout</button>
+      <div *ngIf="isLoggedIn()">
+        <button routerLink="/profile" mat-button>Profile</button>
+        <button routerLink="/messages" mat-button>Messages</button>
+        <button (click)="search()" mat-button>Search</button>
+        <button (click)="logOut()" mat-button>Logout</button>
+      </div>
 
     </mat-toolbar-row>
 

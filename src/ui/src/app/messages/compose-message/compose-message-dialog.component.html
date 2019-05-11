@@ -1,11 +1,56 @@
-<form class="example-form">
-  <!--<mat-form-field class="example-full-width">-->
-    subject<input type="text" [(ngModel)]="messageSubject" name="messageSubject">
-    text <textarea [(ngModel)]="messageText" name="textMessage"></textarea>
-  <!--</mat-form-field>-->
+<div class="message-dialog-wrapper">
 
+  <mat-card class="form-card">
+    <form #messageForm="ngForm" (ngSubmit)="sendMessage(messageForm.value)" autocomplete="off">
 
-  <button mat-raised-button (click)="sendMessage()">Send Message</button>
-  <button mat-raised-button (click)="cancel()">Cancel</button>
+      <mat-card-header>
+        <mat-card-title>Send {{profileName}} a message</mat-card-title>
+      </mat-card-header>
 
-</form>
+      <mat-card-content>
+
+        <table class="form-table" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field>
+                <input type="text"
+                       placeholder="Subject"
+                       name="subject"
+                       ngModel
+                       required
+                       matInput>
+                <mat-error>
+                  Please enter a subject
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <textarea placeholder="Message"
+                          name="messageText"
+                          class="message-text"
+                          ngModel
+                          required
+                          matInput>
+                </textarea>
+                <mat-error>
+                  Please enter some message text
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button type="submit" [disabled]="messageForm.invalid" mat-raised-button>Send</button>
+        <button type="reset" (click)="cancel()" mat-raised-button>Cancel</button>
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+
+</div>

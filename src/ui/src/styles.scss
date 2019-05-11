@@ -37,7 +37,13 @@ body {
 }
 
 search-dialog {
-  .dialog-wrapper {
+  .search-dialog-wrapper {
     width: 500px;
+  }
+}
+
+compose-message-dialog {
+  .message-dialog-wrapper {
+    width: 700px;
   }
 }

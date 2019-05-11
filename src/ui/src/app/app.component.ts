@@ -4,8 +4,6 @@ import { MatDialog } from '@angular/material';
 
 import { AuthService } from './common/service/auth/auth.service';
 import { AppStorage } from './common/util/app-storage';
-import { SearchDialogComponent } from './search/search-dialog/search-dialog.component';
-import { DialogService } from './common/component/dialog/dialog.service';
 
 
 @Component({
@@ -15,7 +13,7 @@ import { DialogService } from './common/component/dialog/dialog.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private router: Router, private dialog: MatDialog, private authService: AuthService, private dialogService: DialogService) {
+  constructor(private router: Router, private dialog: MatDialog, private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -31,14 +29,6 @@ export class AppComponent implements OnInit {
   logOut(): void {
     AuthService.logOut();
     this.router.navigate(['/']);
-  }
-
-  openSearchDialog() {
-    if (AppStorage.getLocationSearchEnabled()) {
-      this.dialog.open(SearchDialogComponent);
-    } else {
-      this.dialogService.showModelDialog('You must set you profiles location and make it visible to other to search by location range', 'OK');
-    }
   }
 
 }

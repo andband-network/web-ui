@@ -91,7 +91,7 @@
               </tr>
               <tr>
                 <td>
-                 {{'Date: ' + (displayedMessage.createdDate | date)}}
+                  {{'Date: ' + (displayedMessage.createdDate | date)}}
                 </td>
               </tr>
               <tr>
@@ -100,13 +100,33 @@
                 </td>
               </tr>
               <tr>
-                <td>
+                <td class="message-body">
                   {{displayedMessage.body}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <hr>
                 </td>
               </tr>
             </table>
 
           </mat-card-content>
+
+          <mat-card-actions>
+            <button *ngIf="displayState === 3"
+                    (click)="openSendMessageDialog(displayedMessage.senderProfileId)"
+                    mat-raised-button
+                    color="primary">
+              Reply
+            </button>
+            <button *ngIf="displayState === 4"
+                    (click)="openSendMessageDialog(displayedMessage.receiverProfileId)"
+                    mat-raised-button
+                    color="primary">
+              Send another message
+            </button>
+          </mat-card-actions>
 
         </mat-card>
 

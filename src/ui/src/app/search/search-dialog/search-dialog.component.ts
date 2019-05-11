@@ -10,15 +10,16 @@ import { DialogService } from '../../common/component/dialog/dialog.service';
   templateUrl: './search-dialog.component.html',
   styleUrls: ['./search-dialog.component.scss']
 })
-export class SearchDialogComponent implements OnInit{
+export class SearchDialogComponent implements OnInit {
 
   canSearchRange: boolean;
   searchLocationRange: boolean;
   keyWords: string;
   rangeInKilometers: number;
 
-  constructor(private dialogRef: MatDialogRef<SearchDialogComponent>, private router: Router, private dialogService: DialogService) {
-    dialogRef.disableClose = true;
+  constructor(private dialogRef: MatDialogRef<SearchDialogComponent>,
+              private router: Router,
+              private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
@@ -38,7 +39,7 @@ export class SearchDialogComponent implements OnInit{
   }
 
   showLocationRangeMessage() {
-    this.dialogService.showModelDialog('You must set you profiles location and make it visible to search by location range', 'OK');
+    this.dialogService.showModelDialog('You must set your profiles location and make it visible to search by location range', 'OK');
   }
 
   close() {

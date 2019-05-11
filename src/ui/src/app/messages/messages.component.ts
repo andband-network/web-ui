@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 
 import { HttpService } from '../common/service/http/http.service';
 import { AppStorage } from '../common/util/app-storage';
 import { ProgressSpinnerService } from '../common/service/progress-spinner/progress-spinner.service';
+import { ComposeMessageDialogComponent } from './compose-message/compose-message-dialog.component';
 
 enum DisplayState {
   INBOX = 1,
@@ -29,7 +30,9 @@ export class MessagesComponent implements OnInit {
 
   displayState: DisplayState = DisplayState.INBOX;
 
-  constructor(private spinner: ProgressSpinnerService, private http: HttpService) {
+  constructor(private spinner: ProgressSpinnerService,
+              private http: HttpService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -52,7 +55,6 @@ export class MessagesComponent implements OnInit {
           this.inbox = new MatTableDataSource<Message>(response);
           // @ts-ignore
           this.inputMessageCount = response.length;
-          console.log(response);
           resolve();
         }, () => {
           resolve();
@@ -92,6 +94,17 @@ export class MessagesComponent implements OnInit {
     } else {
       this.displayState = DisplayState.SENT_MESSAGE;
     }
+  }
+
+  openSendMessageDialog(receiverProfileId: string, receiverProfileName: string): void {
+    const messageDialogConfig: any = {
+      data: {
+        senderProfileId: AppStorage.getProfileId(),
+        receiverProfileId: receiverProfileId,
+        receiverProfileName: receiverProfileName
+      }
+    };
+    this.dialog.open(ComposeMessageDialogComponent, messageDialogConfig);
   }
 
 }

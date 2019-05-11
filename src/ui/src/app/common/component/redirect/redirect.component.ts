@@ -17,7 +17,7 @@ export class RedirectComponent implements OnInit {
     if (this.auth.isLoggedIn()) {
       this.router.navigate(['/profile']);
     } else {
-      this.router.navigate(['']);
+      this.router.navigate(['/']);
     }
   }
 

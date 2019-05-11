@@ -1,49 +1,57 @@
 .messages-wrapper {
 
-  mat-drawer {
-    width: 15%;
+  mat-drawer-container {
+    min-height: 6.5em;
 
-    .side-nav {
-      margin-top: 10%;
+    mat-drawer {
+      width: 15%;
 
-      button {
-        display: block;
-        margin-top: 5%;
-        width: 100%;
-      }
+      .side-nav {
+        margin-top: 10%;
 
-      button.selected {
-        background-color: #f0efff;
-      }
-    }
-  }
+        button {
+          display: block;
+          margin-top: 5%;
+          width: 100%;
+        }
 
-  .mat-drawer-content {
-    margin-left: 15%;
-
-    .table-wrapper {
-      overflow: auto;
-
-      table {
-        width: 100%;
-
-        .mat-row:hover {
+        button.selected {
           background-color: #f0efff;
-          cursor: pointer;
-        }
-
-        tr.mat-footer-row {
-          font-weight: bold;
-        }
-
-        .mat-table-sticky {
-          border-top: 1px solid #e0e0e0;
         }
       }
     }
 
-    table.message-table {
-      width: 100%;
+    .mat-drawer-content {
+      margin-left: 15%;
+
+      .table-wrapper {
+        overflow: auto;
+
+        table {
+          width: 100%;
+
+          .mat-row:hover {
+            background-color: #f0efff;
+            cursor: pointer;
+          }
+
+          tr.mat-footer-row {
+            font-weight: bold;
+          }
+
+          .mat-table-sticky {
+            border-top: 1px solid #e0e0e0;
+          }
+        }
+      }
+
+      table.message-table {
+        width: 100%;
+
+        .message-body {
+          white-space: pre-line;
+        }
+      }
     }
   }
 
