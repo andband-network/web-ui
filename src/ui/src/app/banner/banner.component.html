@@ -8,8 +8,8 @@
       <span class="spacer"></span>
 
       <div *ngIf="!isLoggedIn()">
-        <button *ngIf="activeRoute !== '/register'" mat-button routerLink="register">Register</button>
         <button *ngIf="activeRoute !== '/'" mat-button routerLink="/">Login</button>
+        <button *ngIf="activeRoute !== '/register'" mat-button routerLink="register">Register</button>
       </div>
 
       <div *ngIf="isLoggedIn()">

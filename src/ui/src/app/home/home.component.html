@@ -1,4 +1,4 @@
-<div class="page-wrapper">
+<div class="home-wrapper">
 
   <mat-card class="form-card">
     <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" autocomplete="off">
@@ -28,6 +28,11 @@
                   Please enter your password
                 </mat-error>
               </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a routerLink="/reset-password" color="primary">Forgot password</a>
             </td>
           </tr>
         </table>

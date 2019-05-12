@@ -5,6 +5,7 @@ import { HttpService } from '../common/service/http/http.service';
 import { AuthService } from '../common/service/auth/auth.service';
 import { AppStorage } from '../common/util/app-storage';
 import { ProgressSpinnerService } from '../common/service/progress-spinner/progress-spinner.service';
+import { DialogService } from '../common/component/dialog/dialog.service';
 
 @Component({
   selector: 'home',
@@ -16,7 +17,8 @@ export class HomeComponent {
   constructor(private router: Router,
               private spinner: ProgressSpinnerService,
               private http: HttpService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private dialogService: DialogService) {
   }
 
   login(credentials): void {
@@ -24,6 +26,9 @@ export class HomeComponent {
     this.authService.login(credentials)
       .subscribe(() => {
         this.loadProfileDetails()
+      }, () => {
+        this.spinner.hide();
+        this.dialogService.showModelDialog("The login credentials you enter are incorrect", "Close");
       });
   }
 

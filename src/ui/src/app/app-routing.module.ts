@@ -11,6 +11,7 @@ import { AuthGuard } from './common/service/auth/guard/auth-guard.service';
 import { AnonymousAuthGuard } from './common/service/auth/guard/anonymous-auth-guard.service';
 import { RedirectComponent } from './common/component/redirect/redirect.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,16 @@ const routes: Routes = [
     path: 'account',
     component: AccountComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    canActivate: [AnonymousAuthGuard]
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent,
+    canActivate: [AnonymousAuthGuard]
   },
   {
     path: '**',

@@ -35,6 +35,7 @@ import { RedirectComponent } from './common/component/redirect/redirect.componen
 import { SearchDialogComponent } from './search/search-dialog/search-dialog.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BannerComponent } from './banner/banner.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { BannerComponent } from './banner/banner.component';
     RedirectComponent,
     SearchDialogComponent,
     RegistrationComponent,
-    BannerComponent
+    BannerComponent,
+    ResetPasswordComponent
   ],
   entryComponents: [
     ComposeMessageDialogComponent,
@@ -63,9 +65,9 @@ import { BannerComponent } from './banner/banner.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSidenavModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatSidenavModule,
     MatButtonModule,
     MatInputModule,
     MatTableModule,
