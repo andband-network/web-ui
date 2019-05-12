@@ -46,7 +46,9 @@ export class SearchDialogComponent implements OnInit {
   }
 
   showLocationRangeMessage(): void {
-    this.dialogService.showModelDialog('You must set your profiles location and make it visible to search by location range', 'OK');
+    if (!this.canSearchRange) {
+      this.dialogService.showModelDialog('You must set your profiles location and make it visible to search by location range', 'OK');
+    }
   }
 
   close(): void {

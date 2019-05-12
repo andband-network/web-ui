@@ -10,6 +10,7 @@ import { AppStorage } from '../common/util/app-storage';
 import { ComposeMessageDialogComponent } from '../messages/compose-message/compose-message-dialog.component';
 import { ProgressSpinnerService } from '../common/service/progress-spinner/progress-spinner.service';
 import { ConfirmationModalDialogComponent } from '../common/component/dialog/confirmation-model/confirmation-modal-dialog.component';
+import { DialogService } from '../common/component/dialog/dialog.service';
 
 @Component({
   selector: 'profile',
@@ -32,9 +33,10 @@ export class ProfileComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private spinner: ProgressSpinnerService,
+              private dialog: MatDialog,
               private http: HttpService,
               private authService: AuthService,
-              private dialog: MatDialog) {
+              private dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -62,7 +64,7 @@ export class ProfileComponent implements OnInit {
         // @ts-ignore
         this.profile = response;
         this.updateProfileImage(this.profile.imageId);
-        if (this.isProfileOwner || this.profile.showLocation) {
+        if (this.userIsLoggedIn && (this.isProfileOwner || this.profile.showLocation)) {
           this.loadGoogleMaps(this.profile);
         }
       });
@@ -103,6 +105,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private addRemoveConnectionAction(action: 'post' | 'delete'): void {
+    this.spinner.show();
     const loggedInUserProfileId: string = AppStorage.getProfileId();
     const connectionProfileId: string = this.profile.id;
     const path: string = '/profiles/' + loggedInUserProfileId + '/connections/' + connectionProfileId;
@@ -111,6 +114,10 @@ export class ProfileComponent implements OnInit {
         // @ts-ignore
         this.connectionStatus = response;
         this.loadConnections(this.profile.id);
+        this.spinner.hide();
+      }, () => {
+        this.spinner.hide();
+        this.dialogService.showSystemErrorDialog();
       });
   }
 
@@ -133,6 +140,7 @@ export class ProfileComponent implements OnInit {
   saveProfile(): void {
     if (!ObjectUtil.equals(this.profile, this.originalProfile)) {
       this.http.put('/profiles', this.profile).subscribe();
+      AppStorage.setProfile(this.profile);
     }
     this.editMode = false;
   }

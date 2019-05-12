@@ -1,75 +1,111 @@
-<div class="main-content">
-  <div class="container">
+<div class="profile-wrapper">
 
-    <div *ngIf="isProfileOwner" class="row col">
-      <button *ngIf="!editMode" (click)="enterEditMode()">Edit Profile</button>
-      <button *ngIf="editMode" (click)="saveProfile()">Save Changes</button>
+  <div class="header">
+    <div class="info">
+      <div class="profile-pic">
+        <img [src]="profileImageLocation">
+        <input *ngIf="editMode"
+               type="file"
+               name="profileImage"
+               (change)="uploadImage($event)"/>
+      </div>
+
+      <div class="profile-name">
+        <strong *ngIf="!editMode">{{profile?.name}}</strong>
+        <mat-form-field *ngIf="editMode">
+          <input type="text"
+                 name="name"
+                 [(ngModel)]="profile.name"
+                 matInput
+                 required/>
+          <mat-error>
+            Name cannot be empty
+          </mat-error>
+        </mat-form-field>
+      </div>
     </div>
 
-    <div *ngIf="userIsLoggedIn && !isProfileOwner" class="connection-button">
-      <button *ngIf="connectionStatus === 'CONNECTED'" (click)="removeConnection()">Remove Connection</button>
-      <button *ngIf="connectionStatus === 'NOT_CONNECTED'" (click)="addConnection()">Add Connection</button>
-      <button *ngIf="connectionStatus === 'PENDING'" (click)="removeConnection()">Cancel Connection Request</button>
-      <button *ngIf="connectionStatus === 'NEEDS_CONFIRMATION'" (click)="addConnection()">Confirm Connection Request</button>
-    </div>
+    <div class="actions">
 
-
-    <button *ngIf="userIsLoggedIn && !isProfileOwner" (click)="openSendMessageDialog()">Send Message</button>
-
-    <div class="main-div">
-
-      <div class="row">
-        <div class="profile-pic">
-          <img [src]="profileImageLocation">
-          <input *ngIf="editMode" type="file" name="profileImage" (change)="uploadImage($event)"/>
-        </div>
-
-        <div class="profile-name">
-          <span *ngIf="!editMode">{{profile?.name}}</span>
-          <input *ngIf="editMode" [(ngModel)]="profile.name" type="text" name="name"/>
-        </div>
-
+      <div *ngIf="isProfileOwner">
+        <button *ngIf="!editMode"
+                (click)="enterEditMode()"
+                color="primary"
+                mat-raised-button>
+          Edit Profile
+        </button>
+        <button *ngIf="editMode"
+                (click)="saveProfile()"
+                color="primary"
+                mat-raised-button>
+          Save Changes
+        </button>
       </div>
 
-      <div class="row bio">
-        <div class="row col">
-          <strong>Bio: </strong>
+      <div *ngIf="userIsLoggedIn && !isProfileOwner">
+        <div class="send-message">
+          <button (click)="openSendMessageDialog()"
+                  color="primary"
+                  mat-raised-button>
+            Send Message
+          </button>
         </div>
-        <div class="row col">
-          <div *ngIf="!editMode">{{profile?.bio}}</div>
-          <textarea *ngIf="editMode" [(ngModel)]="profile.bio" name="bio"></textarea>
+
+        <div class="connection">
+          <button *ngIf="connectionStatus === 'CONNECTED'"
+                  (click)="removeConnection()"
+                  color="primary"
+                  mat-raised-button>
+            Remove Connection
+          </button>
+          <button *ngIf="connectionStatus === 'NOT_CONNECTED'"
+                  (click)="addConnection()"
+                  color="primary"
+                  mat-raised-button>
+            Add Connection
+          </button>
+          <button *ngIf="connectionStatus === 'PENDING'"
+                  (click)="removeConnection()"
+                  color="primary"
+                  mat-raised-button>
+            Cancel Connection Request
+          </button>
+          <button *ngIf="connectionStatus === 'NEEDS_CONFIRMATION'"
+                  (click)="addConnection()"
+                  color="primary"
+                  mat-raised-button>
+            Confirm Connection Request
+          </button>
         </div>
-      </div>
-
-
-      <div class="connections">
-        <strong>Connections:</strong>
-        <div class="row">
-          <div *ngFor="let connection of connections">
-            <div class="connection">
-              <a routerLink="/profile/{{connection.id}}">
-                <img src="{{imagesUri}}/{{connection.imageId}}" [title]="connection.name" [alt]="connection.name"> <br>
-                {{connection.name}}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div *ngIf="userIsLoggedIn">
-
-      <div *ngIf="!editMode">
-        <p>show location: {{profile?.showLocation}}</p>
-      </div>
-      <div *ngIf="editMode">
-        <p>show location</p> <mat-checkbox [(ngModel)]="profile.showLocation">Show location</mat-checkbox>
       </div>
 
     </div>
-
-    <div id="map"></div>
-
   </div>
+
+  <div class="bio" *ngIf="profile?.bio || editMode">
+    <strong>Bio: </strong>
+    <div *ngIf="!editMode">{{profile?.bio}}</div>
+    <mat-form-field *ngIf="editMode">
+      <textarea [(ngModel)]="profile.bio" name="bio" matInput></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="connections" *ngIf="connections?.length > 0">
+    <strong>Connections:</strong>
+    <div class="connection-results">
+      <div class="connection" *ngFor="let connection of connections">
+        <a routerLink="/profile/{{connection.id}}">
+          <img src="{{imagesUri}}/{{connection.imageId}}" [title]="connection.name" [alt]="connection.name">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="location" *ngIf="userIsLoggedIn">
+    <div *ngIf="editMode">
+      <mat-checkbox [(ngModel)]="profile.showLocation">Show location</mat-checkbox>
+    </div>
+    <div id="map" [hidden]="!profile?.showLocation"></div>
+  </div>
+
 </div>

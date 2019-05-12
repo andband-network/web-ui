@@ -1,72 +1,94 @@
-.btn.btn-primary {
-  background-color: #5a6268!important;
-  border-color: black!important;
-}
+.profile-wrapper {
+  margin: 5% 10%;
 
-.main-div {
-  background: #ffffff none repeat scroll 0 0;
-  border-radius: 2px;
-  margin: 0 auto 30px;
-  max-width: 90%;
-  padding: 50px 70px 40px 71px;
-}
+  .header {
+    display: flex;
+    justify-content: space-between;
 
+    .info {
+      display: flex;
 
-.profile-details .main-div {
-  background: #ffffff none repeat scroll 0 0;
-  border-radius: 2px;
-  margin: 0px auto 30px;
-  max-width: 80%;
-  padding: 50px 70px 70px 71px;
-}
-.profile-details textarea {
-  width: 100%;
-}
+      .profile-pic {
+        img {
+          height: 10em;
+          width: 10em;
+        }
 
-.profile-pic img {
-  height: 150px;
-  width: 150px;
-}
+        input {
+          display: inherit;
+          width: 185px;
+        }
+      }
 
-.profile-name {
-  margin: 10px;
-  font-size: 20px;
-}
+      .profile-name {
+        margin-top: 6%;
+        font-size: 1.5em;
 
-.bio {
-  margin: 20px;
-}
+        strong {
+          margin-left: 1.5em;
+        }
 
-.connections {
-  margin: 20px;
-}
+        mat-form-field {
+          margin-top: -8%;
 
-.connections img {
-  height: 80px;
-  width: 80px;
-}
+          /deep/ .mat-form-field-infix {
+            padding-top: 0;
+          }
+        }
+      }
+    }
 
-.connections > div {
-  margin-left: 25px;
-}
+    .actions {
+      display: flex;
+      flex-direction: column;
 
-.connection {
-  margin-right: 5px;
-}
+      button {
+        width: 100%;
+        margin-top: 5%;
+        margin-bottom: 5%;
+      }
+    }
+  }
 
-.search .main-div {
-  background: #ffffff none repeat scroll 0 0;
-  border-radius: 2px;
-  margin: 0 auto 30px;
-  max-width: 90%;
-  padding: 10px 70px 40px 71px;
-}
+  .bio {
+    margin: 3%;
 
-.connection a {
-  text-decoration: none;
-}
+    mat-form-field {
+      display: block;
 
-#map {
-  height: 500px;
-  width: 500px;
+      /deep/ .mat-form-field-infix {
+        padding-top: 0;
+
+        textarea {
+          min-height: 6em
+        }
+      }
+    }
+  }
+
+  .connections {
+    margin: 3%;
+
+    .connection-results {
+      display: flex;
+      flex-wrap: wrap;
+
+      .connection {
+        margin: .3em;
+
+        img {
+          height: 5em;
+          width: 5em;
+        }
+      }
+    }
+  }
+
+  .location {
+    margin: 5%;
+
+    #map {
+      height: 35em;
+    }
+  }
 }
