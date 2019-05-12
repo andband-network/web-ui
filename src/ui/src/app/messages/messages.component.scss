@@ -45,14 +45,25 @@
         }
       }
 
-      table.message-table {
-        width: 100%;
+      .message-content {
+        mat-card-content {
+          margin: 1%;
 
-        .message-body {
-          white-space: pre-line;
+          table.message-table {
+            width: 100%;
+
+            .message-body {
+              white-space: pre-line;
+            }
+          }
+        }
+
+        mat-card-actions {
+          margin: 1%;
         }
       }
     }
+
   }
 
 }

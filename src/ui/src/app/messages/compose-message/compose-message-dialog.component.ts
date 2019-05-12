@@ -15,6 +15,7 @@ export class ComposeMessageDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) private messageData: any,
               private dialogRef: MatDialogRef<ComposeMessageDialogComponent>,
               private http: HttpService) {
+    dialogRef.disableClose = true;
   }
 
   ngOnInit(): void {

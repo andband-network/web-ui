@@ -38,7 +38,7 @@
 
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-            <td mat-cell *matCellDef="let message"> {{message.createdDate | date}} </td>
+            <td mat-cell *matCellDef="let message"> {{message.createdDate | date:'d MMM yyyy'}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="inboxDisplayedColumns"></tr>
@@ -61,7 +61,7 @@
 
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-            <td mat-cell *matCellDef="let message"> {{message.createdDate | date}} </td>
+            <td mat-cell *matCellDef="let message"> {{message.createdDate | date:'d MMM yyyy'}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="inboxDisplayedColumns"></tr>
@@ -73,10 +73,6 @@
       <div class="message-content" *ngIf="displayState === 3 || displayState === 4">
 
         <mat-card class="message-card">
-
-          <mat-card-header>
-            <mat-card-title>{{displayedMessage.subject}}</mat-card-title>
-          </mat-card-header>
 
           <mat-card-content>
 
@@ -91,7 +87,12 @@
               </tr>
               <tr>
                 <td>
-                  {{'Date: ' + (displayedMessage.createdDate | date)}}
+                  {{'Date: ' + (displayedMessage.createdDate | date:'d MMM yyyy, h:mm aaa')}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{'Subject: ' + (displayedMessage.subject)}}
                 </td>
               </tr>
               <tr>
@@ -115,13 +116,13 @@
 
           <mat-card-actions>
             <button *ngIf="displayState === 3"
-                    (click)="openSendMessageDialog(displayedMessage.senderProfileId)"
+                    (click)="openSendMessageDialog(displayedMessage.senderProfileId, displayedMessage.senderProfileId)"
                     mat-raised-button
                     color="primary">
               Reply
             </button>
             <button *ngIf="displayState === 4"
-                    (click)="openSendMessageDialog(displayedMessage.receiverProfileId)"
+                    (click)="openSendMessageDialog(displayedMessage.receiverProfileId, displayedMessage.receiverProfileName)"
                     mat-raised-button
                     color="primary">
               Send another message

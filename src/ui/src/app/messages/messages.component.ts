@@ -87,7 +87,6 @@ export class MessagesComponent implements OnInit {
   }
 
   viewMessage(message: Message) {
-    console.log(message);
     this.displayedMessage = message;
     if (this.displayState === DisplayState.INBOX) {
       this.displayState = DisplayState.RECEIVED_MESSAGE;

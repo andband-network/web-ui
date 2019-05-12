@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 import { SearchService } from '../search.service';
 import { DomainInfo } from '../../common/util/domain-info';
 import { ProgressSpinnerService } from '../../common/service/progress-spinner/progress-spinner.service';
+import { AppStorage } from '../../common/util/app-storage';
+import { ComposeMessageDialogComponent } from '../../messages/compose-message/compose-message-dialog.component';
 
 @Component({
   selector: 'search-results',
@@ -15,7 +18,10 @@ export class SearchResultsComponent implements OnInit {
   searchResults: Array<Profile>;
   imagesUri: string;
 
-  constructor(private route: ActivatedRoute, private spinner: ProgressSpinnerService, private searchService: SearchService) {
+  constructor(private route: ActivatedRoute,
+              private dialog: MatDialog,
+              private spinner: ProgressSpinnerService,
+              private searchService: SearchService) {
   }
 
   ngOnInit() {
@@ -27,6 +33,17 @@ export class SearchResultsComponent implements OnInit {
         this.searchProfiles(keyWords, rangeInKilometers);
       }
     });
+  }
+
+  openSendMessageDialog(profile: Profile): void {
+    const messageDialogConfig: any = {
+      data: {
+        senderProfileId: AppStorage.getProfileId(),
+        receiverProfileId: profile.id,
+        receiverProfileName: profile.name,
+      }
+    };
+    this.dialog.open(ComposeMessageDialogComponent, messageDialogConfig);
   }
 
   private searchProfiles(keyWords: Array<string>, rangeInKilometers: number) {
