@@ -1,0 +1,45 @@
+.account-wrapper {
+
+  .form-card {
+    margin: 0% 20% 10% 20%;
+    padding: 2% 2% 2% 2%;
+
+    /deep/ .mat-card-header-text {
+      margin: auto;
+    }
+
+
+    .form-table {
+      width: 100%;
+
+      mat-form-field {
+        width: 100%;
+      }
+
+      tr td {
+        padding-top: 4%;
+
+        a {
+          color: #673ab7;
+        }
+
+        button {
+          margin-left: 30%;
+        }
+      }
+    }
+
+
+    mat-card-actions {
+      button {
+        display: block;
+        margin: auto;
+
+        /deep/ .mat-button-wrapper {
+          font-size: 1.3em
+        }
+      }
+    }
+  }
+
+}
